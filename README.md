@@ -6,7 +6,10 @@ Nayeon (nayeonk@mit.edu) 5125607022
 Jorrie (jorrieb@mit.edu)
 Giulio (gueltro@mit.edu)
 
-Design:
+# Link to final build:
+http://www.mit.edu/~gueltro/Snakes/index.html
+
+# Design:
 
 * Time-based, single player game with multiple snakes.
 * Player controls one snake at a time. Time starts at 0, each time player makes move is represented by one time step.
