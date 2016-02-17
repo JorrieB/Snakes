@@ -151,6 +151,12 @@ function moveShadows(){
     }
 
 function rollBackTime(player){
+    for (var a in actorList) {
+            actor = actorList[a]
+            if (actor.shadow != -1 ){
+                    actor.shadow = 0;
+        }
+    }
     new_actor = {x:player.x, y:player.y, shadow:0, story:player.story}
     actorList.push(new_actor)
     player.x = 0;
