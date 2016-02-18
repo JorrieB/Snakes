@@ -71,7 +71,7 @@ function onKeyUp(event) {
                         break;
                 case Phaser.Keyboard.ONE:
                             console.log("Time going to rollback")
-                            rollBackTime(player)
+                            rollBackTime(player);
         }
         
         // update position of the shadows
@@ -151,17 +151,23 @@ function moveShadows(){
     }
 
 function rollBackTime(player){
-    for (var a in actorList) {
+    console.log("Creating new shadow actor")
+    new_story = [];
+    for (var i in player.story){
+        new_story.push(player.story[i])
+    }
+    var new_actor = {x:(0 +player.x), y:(0 +player.y), shadow:0, story:new_story}
+    actorList.push(new_actor)
+    player.x = 0;
+    player.y = randomInt(ROWS);
+    player.story=[];
+    recordPosition(player);
+        for (var a in actorList) {
             actor = actorList[a]
             if (actor.shadow != -1 ){
                     actor.shadow = 0;
         }
     }
-    new_actor = {x:player.x, y:player.y, shadow:0, story:player.story}
-    actorList.push(new_actor)
-    player.x = 0;
-    player.y = randomInt(ROWS);
-    recordPosition(player);
 }
 
 function canGo(actor,dir) {
