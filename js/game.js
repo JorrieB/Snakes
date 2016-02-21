@@ -1,4 +1,4 @@
-// font size
+
 var FONT = 32
  
 // map dimensions
@@ -9,15 +9,12 @@ var timeStep = 0
 var activeSnake
 var pastSnakes = [] 
 
-
-var game = new Phaser.Game(COLS * FONT, ROWS * FONT, Phaser.CANVAS, null, {
+// var game = new Phaser.Game(COLS * FONT, ROWS * FONT, Phaser.CANVAS, null, {
+var game = new Phaser.Game(COLS, ROWS, Phaser.CANVAS, null, {
         create: create
 });
 
-// the structure of the map, and the function necessary to draw it
 var map
-
-
 
 function onKeyUp(event) {
         // act on player input
@@ -99,7 +96,6 @@ function preload() {
 function create() {
 	// init keyboard commands
 	game.input.keyboard.addCallbacks(null, null, onKeyUp)
-
 }
 
 
