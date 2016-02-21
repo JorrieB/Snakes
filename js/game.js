@@ -40,10 +40,12 @@ function onKeyUp(event) {
                 //             rollBackTime(player);
         }
 
+        // Check if the change of direction was allowed
         if acted {
                 timeStep++
                 updateBoard()
         }
+
 }
 
 //
@@ -101,6 +103,63 @@ function drawSnakes(cellVal,snakeArray){
                 }
         }
         return collisionCoordinate
+}
+
+function drawInitBoard() {
+
+}
+
+function drawUpdatedBoard() {
+
+    for (var x = 0; x < map.rows; x++) {
+        for (var y = 0; y < map.columns; y++) {
+            // enumCells
+
+            // if empty cell:
+            if (map.get(x,y) == 0) {
+                Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
+                game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#FFF')
+            }
+
+            // if border cell:
+            if (map.get(x,y) == 1) {
+                Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
+                game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#B3B3B3')
+            }
+
+            // if exit cell:
+            if (map.get(x,y) == 2) {
+                Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
+                game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#305AFF')
+            }
+
+            // if pastSnakes cell:
+            if (map.get(x,y) == 3) {
+                Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
+                game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#DB95B8')
+            }
+
+            // if currentSnakes cell:
+            if (map.get(x,y) == 4) {
+                Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
+                game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#FFADD6')
+            }
+            
+        }
+    }
+
+    // // Draw Active Snake
+    // var activePositions = activeSnake.getPositionAtTime(timeStep);
+    // for activePosition in activePositions {
+    //     game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#FFADD6');
+    // }
+    
+    // // Draw Shadow Snakes
+    // for snake in snakeArray{
+    //     var positions = snake.getPositionAtTime(timeStep)
+    //     for position in positions {
+    //         game.debug.renderRectangle(map.cells[position.y][position.x],'#DB95B8');
+    //     }
 }
 
 function exitBoard() {
