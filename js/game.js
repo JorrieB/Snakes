@@ -68,17 +68,23 @@ function gameWin(){
         console.log("You win!")
 }
 
+function collision(){
+        var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
+        activeSnake = createSnakeWith(snakeProperties)
+        timeStep = 0
+}
+
 //updates view of board according to current timestep
 function updateBoard() {
         map.clear(pastSnakes.length)
 
-        var collision1 = drawSnakes(4,[activeSnake])
-        var collision2 = drawSnakes(3,pastSnakes)
+        var collCoord1 = drawSnakes(4,[activeSnake])
+        var collCoord2 = drawSnakes(3,pastSnakes)
 
-        if !(collision1 == null && collision2 == null){
-                //game over
+        if !(collCoord1 == null && collCoord2 == null){
+                collision()
         }
-        
+
 }
 
 //takes array of snakes, updates map according to their positions
