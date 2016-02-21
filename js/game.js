@@ -25,8 +25,8 @@ function initMap() {
                 var newRow = [];
                 for (var x = 0; x < COLS; x++) {
                     // newRow.push('');
-                    square = new Phaser.Rectangle(0, 550, 800, 50);
-                    newRow.push(game.debug.renderRectangle(square,'#0fffff'));
+                    square = new Phaser.Rectangle(x*100, y*100, 100, 100);
+                    newRow.push(square);
                 }
                 map.push(newRow);
         }
@@ -36,13 +36,15 @@ function drawMap() {
     for (var y = 0; y < ROWS; y++)
         for (var x = 0; x < COLS; x++)
             squareDisplay[y][x] = map[y][x];
+
 }
 
 function initCell(x, y) {
         // add a single cell in a given position to the ascii display
         // var style = { font: FONT + "px monospace", fill:"#fff"};
         // return game.add.text(FONT*0.6*x, FONT*y, chr, style);
-        return game.debug.geom(map[y][x], "#ff9999");
+        // return game.debug.geom(, "#ff9999");
+        return game.debug.renderRectangle(map[y][x],'#000');
 }
 
 function onKeyUp(event) {
@@ -112,7 +114,7 @@ function initActors() {
                         actor.y=randomInt(ROWS);
                         actor.x=0;
                         recordPosition(actor)
-                } while ( map[actor.y][actor.x] == '#' || actorMap[actor.y + "_" + actor.x] != null );
+                } while ( map[actor.y][actor.x] == Phaser.Rectangle(0, 0, 100, 100) || actorMap[actor.y + "_" + actor.x] != null );
  
                 // add references to the actor to the actors list & map
                 actorMap[actor.y + "_" + actor.x]= actor;
@@ -147,7 +149,7 @@ function moveShadows(){
             for (var a in actorList) {
                     console.log(actorList[a])
                     if (true){
-                            squareDisplay[actorList[a].y][actorList[a].x].content = a == 0?''+player.hp:'e';
+                            squareDisplay[actorList[a].y][actorList[a].x] = a == 0?game.debug.renderRectangle(map[y][x],'#ff9999'):game.debug.renderRectangle(map[y][x],'#000');
             }
         }
     }
@@ -231,14 +233,15 @@ function create() {
 	// initialize map
 	initMap();
 	// initialize screen
-	squareDisplay = [];
+	// squareDisplay = [];
 	for (var y = 0; y < ROWS; y++) {
-	        var newRow = [];
-	        squareDisplay.push(newRow);
+	        // var newRow = [];
+	        // squareDisplay.push(newRow);
 	        for (var x = 0; x < COLS; x++)
-	                newRow.push( initCell(x, y) );
+	                // newRow.push( initCell(x, y) );
+                game.debug.renderRectangle(map[y][x],'#000');
 	}
-	drawMap();
+	// drawMap();
     // initialize actors
     initActors();
     drawActors();
