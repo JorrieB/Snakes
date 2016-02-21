@@ -40,10 +40,12 @@ function onKeyUp(event) {
                 //             rollBackTime(player);
         }
 
+        // Check if the change of direction was allowed
         if acted {
                 timeStep++
                 updateBoard()
         }
+
 }
 
 //
