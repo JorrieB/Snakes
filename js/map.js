@@ -42,6 +42,7 @@ var Map = function(sizeX, sizeY, SnakeMap) {
     }
 
     that.put = function(content, x, y){
+        // TODO: change to y,x?
     	if (y < rows && x < columns && (cells[x][y] == enumCell.empty || cells[x][y].exit ){
     		cells[x][y] = content
             return true
