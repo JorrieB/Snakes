@@ -33,7 +33,7 @@ function initMap() {
 function drawMap() {
     for (var y = 0; y < ROWS; y++)
         for (var x = 0; x < COLS; x++)
-            asciidisplay[y][x].content = map[y][x];
+             game.debug.renderRectangle(map[y][x],'#ff9999');
 }
 
 function initCell(chr, x, y) {
