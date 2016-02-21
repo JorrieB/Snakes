@@ -5,7 +5,7 @@ var FONT = 32
 var ROWS =  30
 var COLS =  30
 
-var timestep = 0
+var timeStep = 0
 var snakeArray = [] 
 
 
@@ -43,7 +43,7 @@ function onKeyUp(event) {
         }
 
         if acted {
-                timestep += 1
+                timeStep += 1
                 updateBoard()
         }
 }
@@ -52,7 +52,7 @@ function onKeyUp(event) {
 function updateBoard() {
         //may need some additonal 'active snake' logic so as to color board properly
         for snake in snakeArray{
-                var positions = snake.getPositionAtTime(timestep)
+                var positions = snake.getPositionAtTime(timeStep)
                 for position in positions{
                         //position will be a coordinate (x,y)
                         //update map at position
@@ -61,6 +61,15 @@ function updateBoard() {
                         //else, handle it
                 }
         }
+}
+
+function exitBoard() {
+    setTimeout(function () {
+        if (player.onBoardAtTime){
+            timeStep++
+            exitBoard()
+        }
+    }, 1000);
 }
 
 // stub
