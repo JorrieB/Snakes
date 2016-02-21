@@ -1,12 +1,12 @@
-var Snake = function(length,startX,startY,startHeading,goalPos){
+var Snake = function(length,start,goal,heading){
 	var that = Object.create(Snake.prototype)
 
-	var story = [(startX,startY)]
-	var x = startX
-	var y = startY
+	var x = start[0]
+	var y = start[1]
+	var story = [(x,y)]
 	var length = length
-	var heading = startHeading
-	var goalPos = goalPos
+	var heading = heading
+	var goalPos = goal
 
 	//takes directional input of some kind, updates actual position of snake to story
 	//if movement conflicts with body immediately - that is, if player is moving right then inputs left, 

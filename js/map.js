@@ -1,4 +1,4 @@
-var Map = function(sizeX, sizeY, exitMap) {
+var Map = function(sizeX, sizeY, SnakeMap) {
 	var that = Object.create(Map.prototype)
 	var cells = []
 	var rows = sizeX
@@ -13,7 +13,7 @@ var Map = function(sizeX, sizeY, exitMap) {
     }
 
     // Initialize a new empty map
-	that.init = function() {
+	that.clear = function(index) {
         // Initialize empty cells
         for (var x = 0; x < rows; x++) {
         	var newRow = []
@@ -29,7 +29,9 @@ var Map = function(sizeX, sizeY, exitMap) {
             cells[rows - 1][x] = enumCell.border
             cells[x][rows - 1] = enumCell.border     
             }  
-        // Initialize exits from exitMap TODO
+        // Initialize exit
+        exitPosition = SnakeMap[index].end
+        cells[exitPosition.x][exitPosition.y] =  enumCell.exit
     }
 
     that.get = function(x, y){
@@ -46,6 +48,13 @@ var Map = function(sizeX, sizeY, exitMap) {
             return true
     	}
         return false
+    }
+
+    that.getSnakeAtIndex = function(i){
+        if (SnakeMap.length >i){
+            return SnakeMap[i]
+        }
+        return null
     }
 
         return that

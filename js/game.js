@@ -6,7 +6,8 @@ var ROWS =  30
 var COLS =  30
 
 var timeStep = 0
-var snakeArray = [] 
+var activeSnake
+var pastSnakes = [] 
 
 // var game = new Phaser.Game(COLS * FONT, ROWS * FONT, Phaser.CANVAS, null, {
 var game = new Phaser.Game(COLS, ROWS, Phaser.CANVAS, null, {
@@ -40,24 +41,60 @@ function onKeyUp(event) {
         }
 
         if acted {
-                timeStep += 1
+                timeStep++
                 updateBoard()
         }
 }
 
+//
+function nextSnake() {
+        pastSnakes.push(activeSnake)
+        var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
+        if snakeProperties != null {
+                activeSnake = createSnakeWith(snakeProperties)
+        } else {
+                gameWin()
+        }
+}
+
+//
+function createSnakeWith(properties){
+        //snake params = length,start,goal,startHeading
+        return Snake(properties.snakeLength,properties.startPos,properties.goalPos,properties.heading)
+}
+
+//
+function gameWin(){
+        console.log("You win!")
+}
+
 //updates view of board according to current timestep
 function updateBoard() {
-        //may need some additonal 'active snake' logic so as to color board properly
+        map.clear(pastSnakes.length)
+
+        var collision1 = drawSnakes(4,[activeSnake])
+        var collision2 = drawSnakes(3,pastSnakes)
+
+        if !(collision1 == null && collision2 == null){
+                //game over
+        }
+        
+}
+
+//takes array of snakes, updates map according to their positions
+//returns null if no collision occurred, else returns coordinate of collision
+function drawSnakes(cellVal,snakeArray){
+        collisionCoordinate = null
         for snake in snakeArray{
                 var positions = snake.getPositionAtTime(timeStep)
                 for position in positions{
-                        //position will be a coordinate (x,y)
-                        //update map at position
-                        //doing so will give us a boolean - whether a collision happened or not
-                        //if no collision, continue
-                        //else, handle it
+                        var collision = map.put(cellVal,currentSnakePosition[0],currentSnakePosition[1]) //input at position the value for current snake
+                        if collision {
+                                collisionCoordinate = (currentSnakePosition[0],currentSnakePosition[1])
+                        }
                 }
         }
+        return collisionCoordinate
 }
 
 function drawInitBoard() {
@@ -124,6 +161,7 @@ function exitBoard() {
             exitBoard()
         }
     }, 1000);
+    nextSnake()
 }
 
 // stub
