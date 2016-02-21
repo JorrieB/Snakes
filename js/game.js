@@ -2,14 +2,14 @@
 var FONT = 32;
  
 // map dimensions
-var ROWS =  35;
-var COLS =  35;
+var ROWS =  30;
+var COLS =  30;
  
 // number of actors per level, including player
 var ACTORS = 1;
 var SHADOWS = 0
 
-var game = new Phaser.Game(COLS * FONT * 0.6, ROWS * FONT, Phaser.AUTO, null, {
+var game = new Phaser.Game(COLS * FONT, ROWS * FONT, Phaser.CANVAS, null, {
         create: create
 });
 
