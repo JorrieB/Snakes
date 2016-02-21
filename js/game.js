@@ -1,15 +1,16 @@
 // font size
-var FONT = 32;
+// var FONT = 32;
  
 // map dimensions
-var ROWS =  30;
-var COLS =  30;
+var ROWS =  500;
+var COLS =  500;
  
 // number of actors per level, including player
 var ACTORS = 1;
 var SHADOWS = 0
 
-var game = new Phaser.Game(COLS * FONT, ROWS * FONT, Phaser.CANVAS, null, {
+// var game = new Phaser.Game(COLS * FONT, ROWS * FONT, Phaser.CANVAS, null, {
+var game = new Phaser.Game(COLS, ROWS, Phaser.CANVAS, null, {
         create: create
 });
 
@@ -22,10 +23,8 @@ function initMap() {
         for (var y = 0; y < ROWS; y++) {
                 var newRow = [];
                 for (var x = 0; x < COLS; x++) {
-                     if (Math.random() > 1.0)
-                        newRow.push('#');
-                    else
-                        newRow.push('.');
+                    // newRow.push('');
+                    newRow.push(Phaser.Rectagle(x, y, 100, 100));
                 }
                 map.push(newRow);
         }
