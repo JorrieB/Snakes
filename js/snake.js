@@ -1,11 +1,11 @@
-var Snake = function(length,start,goal,startHeading){
+var Snake = function(length,start,goal,heading){
 	var that = Object.create(Snake.prototype)
 
 	var x = start[0]
 	var y = start[1]
 	var story = [(x,y)]
 	var length = length
-	var heading = startHeading
+	var heading = heading
 	var goalPos = goal
 
 	//takes directional input of some kind, updates actual position of snake to story
