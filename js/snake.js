@@ -1,4 +1,4 @@
-var Snake = function(length,startX,startY, startHeading){
+var Snake = function(length,startX,startY,startHeading,goalPos){
 	var that = Object.create(Snake.prototype)
 
 	var story = [(startX,startY)]
@@ -6,6 +6,7 @@ var Snake = function(length,startX,startY, startHeading){
 	var y = startY
 	var length = length
 	var heading = startHeading
+	var goalPos = goalPos
 
 	//takes directional input of some kind, updates actual position of snake to story
 	//if movement conflicts with body immediately - that is, if player is moving right then inputs left, 
@@ -59,6 +60,11 @@ var Snake = function(length,startX,startY, startHeading){
 		}
 
 		return positions
+	}
+
+	//takes timestamp, returns whether or not it is currently on board
+	that.onBoardAtTime = function(timeStep) {
+		return (timeStep - story.length) >= length
 	}
 
 	return that
