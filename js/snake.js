@@ -7,39 +7,45 @@ var Snake = function(length,startX,startY, startHeading){
 	var length = length
 	var heading = startHeading
 
-	that.shadow = false
-
 	//takes directional input of some kind, updates actual position of snake to story
 	//if movement conflicts with body immediately - that is, if player is moving right then inputs left, 
 	//the snake will keep moving in the original direction
-	that.move = function(){
+
+
+	//input direction of type DIRECTION_ENUM
+	//return boolean if move was either valid/made or invalid/not made
+	that.move = function(direction){
+		//if the input direction is exactly opposite of the direction the snake is currently moving,
+		//do nothing and return false as it is an invalid move 
+		if ((that.heading + 2) % 4 == heading){
+			return false
+		}
+		//otherwise, move the snake in the proper direction, tell the game you've moved
 		switch(that.heading){
 			case 0:
-				
+			console.log("RIGHT")
+			x += 1
 			break
 
 			case 1:
-
+			y += 1
+			console.log("UP")
 			break
 
 			case 2:
-
+			x -= 1
+			console.log("LEFT")
 			break
 
 			default:
-
+			y -= 1
+			console.log("DOWN")
 			break
 		}
+		that.heading = direction
+		story.push((x,y))
+		return true
 	}
-
-	//turn the snake in the given direction
-	that.turn = function(direction){
-		//the directions don't directly conflict, turn can be done
-		if !((that.heading + 2) % 4 == heading){
-			this.heading = direction
-		}
-	}
-
 
 	//returns array of positions occupied by the snake at the current timestep
 	//if the snake is off the board, an empty array will be returned
