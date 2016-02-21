@@ -15,33 +15,33 @@ var Map = function(sizeX, sizeY, exitMap) {
     // Initialize a new empty map
 	that.init = function() {
         // Initialize empty cells
-        for (var y = 0; y < rows; y++) {
+        for (var x = 0; x < rows; x++) {
         	var newRow = []
-        	for (var x = 0; x < columns; x++) {
+        	for (var y = 0; y < columns; y++) {
         		newRow.push(enumCell.empty)
-        		board.push(newRow)
+        		cells.push(newRow)
         	}
         }
         // Initialize the border
         for (var x = 0; x < rows; x++) {
-            board[0][x] = enumCell.border
-            board[x][0] = enumCell.border
-            board[rows - 1][x] = enumCell.border
-            board[x][rows - 1] = enumCell.border     
+            cells[0][x] = enumCell.border
+            cells[x][0] = enumCell.border
+            cells[rows - 1][x] = enumCell.border
+            cells[x][rows - 1] = enumCell.border     
             }  
         // Initialize exits from exitMap TODO
     }
 
     that.get = function(x, y){
     	if (y < rows && x < columns){
-    		return board[x][y]
+    		return cells[x][y]
     	}
     	return null;
     }
 
     that.put = function(content, x, y){
-    	if (y < rows && x < columns && (board[x][y] = enumCell.empty || board[x][y].empty ){
-    		board[x][y] = content
+    	if (y < rows && x < columns && (cells[x][y] == enumCell.empty || cells[x][y].exit ){
+    		cells[x][y] = content
             return true
     	}
         return false
