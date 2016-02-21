@@ -20,11 +20,13 @@ var map;
 function initMap() {
         // create a new random map
         map = [];
+
         for (var y = 0; y < ROWS; y++) {
                 var newRow = [];
                 for (var x = 0; x < COLS; x++) {
                     // newRow.push('');
-                    newRow.push(Phaser.Rectagle(x, y, 100, 100));
+                    square = new Phaser.Rectangle(0, 550, 800, 50);
+                    newRow.push(game.debug.renderRectangle(square,'#0fffff'));
                 }
                 map.push(newRow);
         }
@@ -33,13 +35,14 @@ function initMap() {
 function drawMap() {
     for (var y = 0; y < ROWS; y++)
         for (var x = 0; x < COLS; x++)
-             game.debug.renderRectangle(map[y][x],'#ff9999');
+            squareDisplay[y][x] = map[y][x];
 }
 
-function initCell(chr, x, y) {
+function initCell(x, y) {
         // add a single cell in a given position to the ascii display
-        var style = { font: FONT + "px monospace", fill:"#fff"};
-        return game.add.text(FONT*0.6*x, FONT*y, chr, style);
+        // var style = { font: FONT + "px monospace", fill:"#fff"};
+        // return game.add.text(FONT*0.6*x, FONT*y, chr, style);
+        return game.debug.geom(map[y][x], "#ff9999");
 }
 
 function onKeyUp(event) {
@@ -144,7 +147,7 @@ function moveShadows(){
             for (var a in actorList) {
                     console.log(actorList[a])
                     if (true){
-                            asciidisplay[actorList[a].y][actorList[a].x].content = a == 0?''+player.hp:'e';
+                            squareDisplay[actorList[a].y][actorList[a].x].content = a == 0?''+player.hp:'e';
             }
         }
     }
@@ -228,12 +231,12 @@ function create() {
 	// initialize map
 	initMap();
 	// initialize screen
-	asciidisplay = [];
+	squareDisplay = [];
 	for (var y = 0; y < ROWS; y++) {
 	        var newRow = [];
-	        asciidisplay.push(newRow);
+	        squareDisplay.push(newRow);
 	        for (var x = 0; x < COLS; x++)
-	                newRow.push( initCell('', x, y) );
+	                newRow.push( initCell(x, y) );
 	}
 	drawMap();
     // initialize actors
