@@ -65,7 +65,7 @@ function updateBoard() {
 
 function exitBoard() {
     setTimeout(function () {
-        if (player.onBoardAtTime){
+        if (player.onBoardAtTime(timeStep)){
             timeStep++
             exitBoard()
         }
