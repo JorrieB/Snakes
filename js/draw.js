@@ -49,7 +49,6 @@ function drawUpdatedBoard() {
         }
     }
 
-
     // // Draw Active Snake
     // var activePositions = activeSnake.getPositionAtTime(timeStep);
     // for activePosition in activePositions {
@@ -62,6 +61,11 @@ function drawUpdatedBoard() {
     //     for position in positions {
     //         game.debug.renderRectangle(map.cells[position.y][position.x],'#DB95B8');
     //     }
+}
+
+function signalEvent(text){
+    document.getElementById("eventText").innerHTML = text
+
 }
 
     // Not used

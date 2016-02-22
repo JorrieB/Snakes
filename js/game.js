@@ -12,6 +12,7 @@ var timeStep = 0
 var activeSnake
 var pastSnakes = [] 
 
+
 // var game = new Phaser.Game(COLS * FONT, ROWS * FONT, Phaser.CANVAS, null, {
 var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, null, {
         create: create,
@@ -80,6 +81,9 @@ function gameWin(){
 }
 
 function collision(){
+        // Change the event text back to default
+        signalEvent("...")
+        // Restart the session with current snake
         var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
         activeSnake = createSnakeWith(snakeProperties)
         timeStep = 0
@@ -97,7 +101,8 @@ function updateBoard() {
 
         if (!(collCoord1 == null && collCoord2 == null)) {
                 //game over
-                collision()
+                signalEvent("You bumped into something else!")
+                setTimeout(collision, 2050)
         }
         if (toCallExit) {
             exitBoard();
