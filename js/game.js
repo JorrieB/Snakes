@@ -14,9 +14,9 @@ var game = new Phaser.Game(COLS, ROWS, Phaser.CANVAS, null, {
         create: create
 });
 
-var snakeData = [{length:1, start:[0, 300], goal:[600, 200], heading:DIRECTION_ENUM.RIGHT},
-                 {length:3, start:[600, 200], goal:[200, 0], heading:DIRECTION_ENUM.LEFT},
-                 {length:5, start:[400, 0], goal:[200, 600], heading:DIRECTION_ENUM.DOWN}];
+var snakeData = [{length:1, startPos:[0, 300], goalPos:[600, 200], heading:DIRECTION_ENUM.RIGHT},
+                 {length:3, startPos:[600, 200], goalPos:[200, 0], heading:DIRECTION_ENUM.LEFT},
+                 {length:5, startPos:[400, 0], goalPos:[200, 600], heading:DIRECTION_ENUM.DOWN}];
 var map = Map(7, 7, snakeData);
 
 function onKeyUp(event) {
@@ -120,7 +120,7 @@ function updateSnakes(cellVal,snakeArray){
 function drawInitBoard() {
     // var graphics = game.add.graphics(map.getRows(), map.getColumns());
     // console.log(map.getRows());
-    game.stage.backgroundColor = '#061f27';
+    // game.stage.backgroundColor = '#061f27';
     for (var x = 0; x < map.getRows(); x++) {
         for (var y = 0; y < map.getColumns(); y++) {
             // var newSquare = new Phaser.Rectangle(x * 100, y * 100, 100, 100);
@@ -135,25 +135,28 @@ function drawInitBoard() {
 }
 
 function drawUpdatedBoard() {
-
+    game.stage.backgroundColor = '#061f27';
     for (var x = 0; x < map.rows; x++) {
         for (var y = 0; y < map.columns; y++) {
             // enumCells
-
+            var square = game.add.sprite(x*100, y*100, 'shadow');
             // if empty cell:
             if (map.get(x,y) == 0) {
+                square.tint = '#FFF';
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
                 // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#FFF')
             }
 
             // if border cell:
             if (map.get(x,y) == 1) {
+                square.tint = '#B3B3B3s';
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
                 // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#B3B3B3')
             }
 
             // if exit cell:
             if (map.get(x,y) == 2) {
+                square.tint = '#305AFF';
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
                 // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#305AFF')
             }
@@ -161,15 +164,15 @@ function drawUpdatedBoard() {
             // if pastSnakes cell:
             if (map.get(x,y) == 3) {
 
-                game.add.sprite(x*100, y*100, 'shadow');
+                // game.add.sprite(x*100, y*100, 'shadow');
+                square.tint = '#DB95B8';
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
                 // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#DB95B8')
             }
 
             // if currentSnakes cell:
             if (map.get(x,y) == 4) {
-                game.add.sprite(x*100, y*100, 'snake');
-
+                // game.add.sprite(x*100, y*100, 'snake');
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
                 // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#FFADD6')
             }
@@ -212,7 +215,7 @@ function create() {
 	// init keyboard commands
 	game.input.keyboard.addCallbacks(null, null, onKeyUp);
     activeSnake = createSnakeWith(map.getSnakeAtIndex(pastSnakes.length));
-    drawInitBoard();
+    drawUpdatedBoard();
 
 }
 
