@@ -31,6 +31,7 @@ var Map = function(sizeX, sizeY, SnakeMap) {
             }  
         // Initialize exit
         goalPosition = SnakeMap[index].goalPos
+        console.log(goalPosition)
         cells[goalPosition[0]][goalPosition[1]] =  enumCell.exit
     }
 

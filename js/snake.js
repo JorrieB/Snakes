@@ -1,11 +1,11 @@
-var Snake = function(length,start,goal,heading){
+var Snake = function(length,start,goal,initHeading){
 	var that = Object.create(Snake.prototype)
 
 	var x = start[0]
 	var y = start[1]
 	var story = [[x,y]]
 	var length = length
-	var heading = heading
+	var heading = initHeading
 	var goalPos = goal
 
 	//takes directional input of some kind, updates actual position of snake to story
@@ -21,25 +21,33 @@ var Snake = function(length,start,goal,heading){
 		if ((that.heading + 2) % 4 == heading){
 			return false
 		}
+		console.log("snake heading is ")
+		console.log(heading)
 		//otherwise, move the snake in the proper direction, tell the game you've moved
-		switch(that.heading){
+		// console.log('direction = ')
+		// console.log(direction)
+		switch(heading){
 			case 0:
+			console.log(direction)
 			console.log("RIGHT")
 			x += 1
 			break
 
 			case 1:
-			y += 1
+			y += 1	
+			console.log(direction)
 			console.log("UP")
 			break
 
 			case 2:
 			x -= 1
+			console.log(direction)
 			console.log("LEFT")
 			break
 
 			default:
 			y -= 1
+			console.log(direction)
 			console.log("DOWN")
 			break
 		}

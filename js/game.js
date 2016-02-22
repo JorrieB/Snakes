@@ -2,22 +2,25 @@
 var FONT = 32
  
 // map dimensions
-var ROWS =  700
-var COLS =  700
+var ROWS =  7 //model's number of rows
+var COLS =  7 
+
+var cellWidth = 100 //draw size
+var cellHeight = 100 
 
 var timeStep = 0
 var activeSnake
 var pastSnakes = [] 
 
 // var game = new Phaser.Game(COLS * FONT, ROWS * FONT, Phaser.CANVAS, null, {
-var game = new Phaser.Game(COLS, ROWS, Phaser.CANVAS, null, {
+var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, null, {
         create: create
 });
 
-var snakeData = [{length:1, start:[0, 300], goal:[600, 200], heading:DIRECTION_ENUM.RIGHT},
-                 {length:3, start:[600, 200], goal:[200, 0], heading:DIRECTION_ENUM.LEFT},
-                 {length:5, start:[400, 0], goal:[200, 600], heading:DIRECTION_ENUM.DOWN}];
-var map = Map(7, 7, snakeData);
+var snakeData = [{length:1, startPos:[0, 3], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT},
+                 {length:3, startPos:[6, 2], goalPos:[2, 0], heading:DIRECTION_ENUM.LEFT},
+                 {length:5, startPos:[4, 0], goalPos:[2, 6], heading:DIRECTION_ENUM.DOWN}];
+var map = Map(ROWS, COLS, snakeData);
 
 function onKeyUp(event) {
         // act on player input
