@@ -42,9 +42,9 @@ function onKeyUp(event) {
                 case Phaser.Keyboard.DOWN:
                         acted = activeSnake.move(DIRECTION_ENUM.DOWN)
                         break
-                // case Phaser.Keyboard.ONE:
-                //             console.log("Time going to rollback")
-                //             rollBackTime(player);
+                 case Phaser.Keyboard.ONE:
+                             console.log("Time going to rollback")
+                             rewind();
         }
 
         // Check if the change of direction was allowed
@@ -60,11 +60,9 @@ function nextSnake() {
         timeStep = 0
         pastSnakes.push(activeSnake)
         var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
-        console.log(snakeProperties)
         if (snakeProperties != null) {
                 activeSnake = createSnakeWith(snakeProperties)
-                updateBoard()
-                drawUpdatedBoard()
+                update()
         } else {
                 gameWin()
         }
@@ -148,6 +146,7 @@ function exitBoard() {
     }, 250);
 }
 
+
 // stub
 function preload() {
     game.load.image('snake', './images/snake.png');
@@ -172,4 +171,13 @@ function create() {
 function update() {
     updateBoard()
     drawUpdatedBoard();
+}
+
+// Rewind time to second to previous snake
+function rewind(){
+    timeStep = 0
+    pastSnakes.pop()
+    var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
+    activeSnake = createSnakeWith(snakeProperties)
+    update()
 }
