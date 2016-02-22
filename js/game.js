@@ -97,6 +97,9 @@ function collision(){
 
 //updates view of board according to current timestep
 function updateBoard() {
+        // Update text
+        signalSnakeIndex(pastSnakes.length, snakeData.length)
+        signalTime(timeStep)
         map.clear(pastSnakes.length)
         
         SnakeHeadPosition = activeSnake.getPositionAtTime(timeStep)[0];
