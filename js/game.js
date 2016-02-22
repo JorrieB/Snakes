@@ -227,10 +227,21 @@ function drawUpdatedBoard() {
     //     }
 }
 
+//returns true iff there are still snakes on the board (active or past)
+function snakesStillOnBoardAtTimeStep(t) {
+        stillOn = activeSnake.onBoardAtTime(t)
+        for (index in pastSnakes){
+                stillOn = stillOn || pastSnakes[index].onBoardAtTime(t)
+        }
+        return stillOn
+}
+
 function exitBoard() {
     setTimeout(function () {
-        if (activeSnake.onBoardAtTime(timeStep)){
+        if (snakesStillOnBoardAtTimeStep(timeStep)){
             timeStep++
+            signalTime(timeStep)
+
             // Updating the position of the board
             map.clear(pastSnakes.length)
             updateSnakes(4,[activeSnake])
