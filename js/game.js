@@ -91,7 +91,14 @@ function updateBoard() {
                 collision()
         }
 
+        // Check if the snake reached the exit. If it did, let it leave the board
+        SnakeHeadPosition = snake.getPositionAtTime(timeStep)[0]
+        positionType = map.get(SnakeHeadPosition[0], SnakeHeadPosition[1])
+        if (positionType == map.enumCells.exit){
+            exitBoard()
+        }
 }
+
 
 //takes array of snakes, updates map according to their positions
 //returns null if no collision occurred, else returns coordinate of collision
