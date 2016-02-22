@@ -158,10 +158,9 @@ function drawUpdatedBoard() {
             // enumCells
             // var square = game.add.sprite(x*100, y*100, 'shadow');
 
-            var newSquare = new Phaser.Rectangle(x * 100, y * 100, 98, 98);
+            var newSquare = new Phaser.Rectangle(x * 100 + 2, y * 100 + 2, 96, 96);
             // game.debug.renderRectangle(newSquare,'#FFF');
 
-            // console.log(x, " ", y, " ", "enums: ", map.get(x,y));
             // if empty cell:
             if (map.get(x,y) == 0) {
                 // square.tint = '#FFF';
