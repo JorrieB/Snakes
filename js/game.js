@@ -2,8 +2,8 @@
 var FONT = 32
  
 // map dimensions
-var ROWS =  30
-var COLS =  30
+var ROWS =  700
+var COLS =  700
 
 var timeStep = 0
 var activeSnake
@@ -14,26 +14,29 @@ var game = new Phaser.Game(COLS, ROWS, Phaser.CANVAS, null, {
         create: create
 });
 
-var map
+var snakeData = [{length:1, start:[0, 300], goal:[600, 200], heading:DIRECTION_ENUM.RIGHT},
+                 {length:3, start:[600, 200], goal:[200, 0], heading:DIRECTION_ENUM.LEFT},
+                 {length:5, start:[400, 0], goal:[200, 600], heading:DIRECTION_ENUM.DOWN}];
+var map = Map(7, 7, snakeData);
 
 function onKeyUp(event) {
         // act on player input
         var acted = false
         switch (event.keyCode) {
                 case Phaser.Keyboard.LEFT:
-                        acted = snake.move(DIRECTION_ENUM.LEFT)
+                        acted = activeSnake.move(DIRECTION_ENUM.LEFT)
                         break
  
                 case Phaser.Keyboard.RIGHT:
-                        acted = snake.move(DIRECTION_ENUM.RIGHT)
+                        acted = activeSnake.move(DIRECTION_ENUM.RIGHT)
                         break
  
                 case Phaser.Keyboard.UP:
-                        acted = snake.move(DIRECTION_ENUM.UP)
+                        acted = activeSnake.move(DIRECTION_ENUM.UP)
                         break
  
                 case Phaser.Keyboard.DOWN:
-                        acted = snake.move(DIRECTION_ENUM.DOWN)
+                        acted = activeSnake.move(DIRECTION_ENUM.DOWN)
                         break
                 // case Phaser.Keyboard.ONE:
                 //             console.log("Time going to rollback")
@@ -108,10 +111,17 @@ function updateSnakes(cellVal,snakeArray){
 }
 
 function drawInitBoard() {
-    for (var x = 0; x < map.rows; x++) {
-        for (var y = 0; y < map.columns; y++) {
-            var newSquare = new Phaser.Rectangle(x*100, y*100, 100, 100);
-            game.debug.renderRectangle(newSquare,'#FFF');
+    // var graphics = game.add.graphics(map.getRows(), map.getColumns());
+    // console.log(map.getRows());
+    game.stage.backgroundColor = '#061f27';
+    for (var x = 0; x < map.getRows(); x++) {
+        for (var y = 0; y < map.getColumns(); y++) {
+            // var newSquare = new Phaser.Rectangle(x * 100, y * 100, 100, 100);
+            // game.debug.renderRectangle(newSquare,'#FFF');
+
+            // graphics.beginFill("#0FFFFF", 1);
+            // graphics.drawRect(x * 100, y * 100, 100, 100);
+            // graphics.endFill;
 
         }
     }
@@ -143,12 +153,16 @@ function drawUpdatedBoard() {
 
             // if pastSnakes cell:
             if (map.get(x,y) == 3) {
+
+                game.add.sprite(x*100, y*100, 'shadow');
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
                 // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#DB95B8')
             }
 
             // if currentSnakes cell:
             if (map.get(x,y) == 4) {
+                game.add.sprite(x*100, y*100, 'snake');
+
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
                 // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#FFADD6')
             }
@@ -182,12 +196,17 @@ function exitBoard() {
 
 // stub
 function preload() {
+    game.load.image('snake', './images/snake.png');
+    game.load.image('shadow', './images/apple.png');
 }
 
 function create() {
+
 	// init keyboard commands
-	game.input.keyboard.addCallbacks(null, null, onKeyUp)
+	game.input.keyboard.addCallbacks(null, null, onKeyUp);
+    activeSnake = createSnakeWith(map.getSnakeAtIndex(pastSnakes.length));
     drawInitBoard();
+
 }
 
 

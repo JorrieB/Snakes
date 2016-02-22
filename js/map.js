@@ -5,10 +5,10 @@ var Map = function(sizeX, sizeY, SnakeMap) {
 	var columns = sizeY
 
     var enumCell= {
-        empty:0
-        border:1
-        exit:2
-        pastSnake:3
+        empty:0,
+        border:1,
+        exit:2,
+        pastSnake:3,
         currentSnake:4
     }
 
@@ -42,13 +42,21 @@ var Map = function(sizeX, sizeY, SnakeMap) {
     }
 
     that.put = function(content, x, y){
-    	if (y < rows && x < columns && (cells[x][y] == enumCell.empty || cells[x][y].exit ){
+    	if (y < rows && x < columns && (cells[x][y] == enumCell.empty || cells[x][y].exit )) {
     		cells[x][y] = content
             return true
     	}
         return false
     }
 
+    that.getRows = function() {
+        return rows
+    }
+
+    that.getColumns = function() {
+        return columns
+    }
+    
     that.getSnakeAtIndex = function(i){
         if (SnakeMap.length >i){
             return SnakeMap[i]
