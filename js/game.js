@@ -14,20 +14,14 @@ var pastSnakes = []
 
 // var game = new Phaser.Game(COLS * FONT, ROWS * FONT, Phaser.CANVAS, null, {
 var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, null, {
-        create: create
+        create: create,
+        render: drawUpdatedBoard
 });
 
-// <<<<<<< HEAD
-// var snakeData = [{length:1, startPos:[0, 300], goalPos:[600, 200], heading:DIRECTION_ENUM.RIGHT},
-//                  {length:3, startPos:[600, 200], goalPos:[200, 0], heading:DIRECTION_ENUM.LEFT},
-//                  {length:5, startPos:[400, 0], goalPos:[200, 600], heading:DIRECTION_ENUM.DOWN}];
-// var map = Map(7, 7, snakeData);
-// =======
-var snakeData = [{length:1, startPos:[0, 3], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT},
-                 {length:3, startPos:[6, 2], goalPos:[2, 0], heading:DIRECTION_ENUM.LEFT},
-                 {length:5, startPos:[4, 0], goalPos:[2, 6], heading:DIRECTION_ENUM.DOWN}];
+var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT},
+                 {snakeLength:4, startPos:[6, 2], goalPos:[2, 0], heading:DIRECTION_ENUM.LEFT},
+                 {snakeLength:5, startPos:[4, 0], goalPos:[2, 6], heading:DIRECTION_ENUM.DOWN}];
 var map = Map(ROWS, COLS, snakeData);
-// >>>>>>> 5a0dd89636922cafa6ca36bdbcda69889676bb43
 
 function onKeyUp(event) {
         // act on player input
@@ -56,7 +50,8 @@ function onKeyUp(event) {
         // Check if the change of direction was allowed
         if (acted) {
                 timeStep++
-                updateBoard()
+                updateBoard();
+                drawUpdatedBoard();
         }
 
 }
@@ -66,8 +61,11 @@ function nextSnake() {
         timeStep = 0
         pastSnakes.push(activeSnake)
         var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
+        console.log(snakeProperties)
         if (snakeProperties != null) {
                 activeSnake = createSnakeWith(snakeProperties)
+                updateBoard()
+                drawUpdatedBoard()
         } else {
                 gameWin()
         }
@@ -94,21 +92,33 @@ function collision(){
 function updateBoard() {
         map.clear(pastSnakes.length)
         
-        var collCoord1 = drawSnakes(4,[activeSnake])
-        var collCoord2 = drawSnakes(3,pastSnakes)
+        SnakeHeadPosition = activeSnake.getPositionAtTime(timeStep)[0];
+        var toCallExit = map.isExit(SnakeHeadPosition[0], SnakeHeadPosition[1])
+        var collCoord1 = updateSnakes(4,[activeSnake])
+        var collCoord2 = updateSnakes(3,pastSnakes)
 
-        if (!(collision1 == null && collision2 == null)) {
+        if (!(collCoord1 == null && collCoord2 == null)) {
                 //game over
                 collision()
         }
-
-        // Check if the snake reached the exit. If it did, let it leave the board
-        SnakeHeadPosition = snake.getPositionAtTime(timeStep)[0]
-        positionType = map.get(SnakeHeadPosition[0], SnakeHeadPosition[1])
-        if (positionType == map.enumCells.exit){
-            exitBoard()
+        if (toCallExit) {
+            console.log("before",  timeStep)
+            exitBoard();
         }
 }
+
+// function isExit(){
+//             // Check if the snake reached the exit. If it did, let it leave the board
+//         SnakeHeadPosition = activeSnake.getPositionAtTime(timeStep)[activeSnake.getPositionAtTime(timeStep).length - 1];
+//         // console.log(activeSnake);
+//         // console.log(activeSnake.getPositionAtTime(timeStep));
+//         positionType = map.get(SnakeHeadPosition[0], SnakeHeadPosition[1])
+//         console.log("checking the position",  positionType)
+//         if (positionType == map.getEnumCell().exit){
+//             exitBoard();
+//         }
+
+// }
 
 
 //takes array of snakes, updates map according to their positions
@@ -116,10 +126,14 @@ function updateBoard() {
 
 function updateSnakes(cellVal,snakeArray){
         collisionCoordinate = null
-        for (snake in snakeArray) {
+        for (s in snakeArray) {
+                var snake = snakeArray[s];
                 var positions = snake.getPositionAtTime(timeStep)
-                for (position in positions) {
-                        var collision = map.put(cellVal,currentSnakePosition[0],currentSnakePosition[1]) //input at position the value for current snake
+                console.log(positions)
+                for (i in positions) {
+                        var currentSnakePosition = positions[i];
+                        // console.log(currentSnakePosition)
+                        var collision = !(map.put(cellVal,currentSnakePosition[0],currentSnakePosition[1])) //input at position the value for current snake
                         if (collision) {
                                 collisionCoordinate = (currentSnakePosition[0],currentSnakePosition[1])
                         }
@@ -147,45 +161,50 @@ function drawInitBoard() {
 
 function drawUpdatedBoard() {
     game.stage.backgroundColor = '#061f27';
-    for (var x = 0; x < map.rows; x++) {
-        for (var y = 0; y < map.columns; y++) {
+    for (var x = 0; x < map.getRows(); x++) {
+        for (var y = 0; y < map.getColumns(); y++) {
+            
             // enumCells
-            var square = game.add.sprite(x*100, y*100, 'shadow');
+            // var square = game.add.sprite(x*100, y*100, 'shadow');
+
+            var newSquare = new Phaser.Rectangle(x * 100, y * 100, 50, 50);
+            // game.debug.renderRectangle(newSquare,'#FFF');
+
+            // console.log(x, " ", y, " ", "enums: ", map.get(x,y));
             // if empty cell:
             if (map.get(x,y) == 0) {
-                square.tint = '#FFF';
+                // square.tint = '#FFF';
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#FFF')
+                game.debug.renderRectangle(newSquare,'#FFF')
             }
 
             // if border cell:
             if (map.get(x,y) == 1) {
-                square.tint = '#B3B3B3s';
+                // square.tint = '#B3B3B3s';
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#B3B3B3')
+                game.debug.renderRectangle(newSquare,'#B3B3B3')
             }
 
             // if exit cell:
             if (map.get(x,y) == 2) {
-                square.tint = '#305AFF';
+                // square.tint = '#305AFF';
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#305AFF')
+                game.debug.renderRectangle(newSquare,'#305AFF')
             }
 
             // if pastSnakes cell:
             if (map.get(x,y) == 3) {
-
                 // game.add.sprite(x*100, y*100, 'shadow');
-                square.tint = '#DB95B8';
+                // square.tint = '#DB95B8';
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#DB95B8')
+                game.debug.renderRectangle(newSquare,'#DB95B8')
             }
 
             // if currentSnakes cell:
             if (map.get(x,y) == 4) {
                 // game.add.sprite(x*100, y*100, 'snake');
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#FFADD6')
+                game.debug.renderRectangle(newSquare,'#FFADD6')
             }
             
         }
@@ -207,12 +226,18 @@ function drawUpdatedBoard() {
 
 function exitBoard() {
     setTimeout(function () {
-        if (player.onBoardAtTime(timeStep)){
+        if (activeSnake.onBoardAtTime(timeStep)){
             timeStep++
+            // Updating the position of the board
+            map.clear(pastSnakes.length)
+            updateSnakes(4,[activeSnake])
+            updateSnakes(3,pastSnakes)
+            drawUpdatedBoard();
             exitBoard()
+        }else{
+            nextSnake()
         }
     }, 1000);
-    nextSnake()
 }
 
 // stub
@@ -225,6 +250,8 @@ function create() {
 
 	// init keyboard commands
 	game.input.keyboard.addCallbacks(null, null, onKeyUp);
+
+    map.clear(pastSnakes.length);
     activeSnake = createSnakeWith(map.getSnakeAtIndex(pastSnakes.length));
     drawUpdatedBoard();
 

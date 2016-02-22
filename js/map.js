@@ -3,10 +3,11 @@ var Map = function(sizeX, sizeY, SnakeMap) {
 	var cells = []
 	var rows = sizeX
 	var columns = sizeY
+    var exit
 
     var enumCell= {
         empty:0,
-        border:1,
+        wall:1,
         exit:2,
         pastSnake:3,
         currentSnake:4
@@ -15,24 +16,34 @@ var Map = function(sizeX, sizeY, SnakeMap) {
     // Initialize a new empty map
 	that.clear = function(index) {
         // Initialize empty cells
+        cells = [];
+            // console.log("cells0: ",cells);
         for (var x = 0; x < rows; x++) {
         	var newRow = []
         	for (var y = 0; y < columns; y++) {
         		newRow.push(enumCell.empty)
-        		cells.push(newRow)
         	}
+            cells.push(newRow)
         }
-        // Initialize the border
+        // console.log("cells1: ",cells);
+        // Initialize the walls
         for (var x = 0; x < rows; x++) {
-            cells[0][x] = enumCell.border
-            cells[x][0] = enumCell.border
-            cells[rows - 1][x] = enumCell.border
-            cells[x][rows - 1] = enumCell.border     
-            }  
+            cells[0][x] = enumCell.wall
+            cells[x][0] = enumCell.wall
+            cells[rows - 1][x] = enumCell.wall
+            cells[x][columns - 1] = enumCell.wall    
+        }  
+        // console.log("cells2: ",cells);
         // Initialize exit
         goalPosition = SnakeMap[index].goalPos
-        console.log(goalPosition)
         cells[goalPosition[0]][goalPosition[1]] =  enumCell.exit
+        startPosition = SnakeMap[index].startPos
+        cells[startPosition[0]][startPosition[1]] =  enumCell.empty
+    }
+
+    that.isExit = function(x,y){
+        cell = cells[x][y]
+        return (cell == enumCell.exit)
     }
 
     that.get = function(x, y){
@@ -43,11 +54,16 @@ var Map = function(sizeX, sizeY, SnakeMap) {
     }
 
     that.put = function(content, x, y){
-    	if (y < rows && x < columns && (cells[x][y] == enumCell.empty || cells[x][y].exit )) {
-    		cells[x][y] = content
-            return true
-    	}
-        return false
+        // console.log("cellsput: ",cells);
+        // console.log(x,", ", y);
+
+        if (0 <= y && 0 <= x && y < rows && x < columns) {
+            if (cells[x][y] == enumCell.exit || cells[x][y] == enumCell.empty) {
+                cells[x][y] = content
+                return true
+            }
+        }
+        result = false
     }
 
     that.getRows = function() {
@@ -56,6 +72,10 @@ var Map = function(sizeX, sizeY, SnakeMap) {
 
     that.getColumns = function() {
         return columns
+    }
+
+    that.getEnumCell = function(x,y) {
+        return enumCell;
     }
     
     that.getSnakeAtIndex = function(i){
