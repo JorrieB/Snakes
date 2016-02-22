@@ -86,6 +86,8 @@ function collision(){
         var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
         activeSnake = createSnakeWith(snakeProperties)
         timeStep = 0
+        updateBoard()
+        drawUpdatedBoard()
 }
 
 //updates view of board according to current timestep
@@ -197,7 +199,7 @@ function drawUpdatedBoard() {
                 // game.add.sprite(x*100, y*100, 'shadow');
                 // square.tint = '#DB95B8';
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                game.debug.renderRectangle(newSquare,'#DB95B8')
+                game.debug.renderRectangle(newSquare,'#E5FF00')
             }
 
             // if currentSnakes cell:

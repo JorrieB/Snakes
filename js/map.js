@@ -33,12 +33,19 @@ var Map = function(sizeX, sizeY, SnakeMap) {
             cells[rows - 1][x] = enumCell.wall
             cells[x][columns - 1] = enumCell.wall    
         }  
-        // console.log("cells2: ",cells);
+
+        // Empty all of the entry/exit cells
+        for (var i = 0; i < SnakeMap.length; i++){
+            startPosition = SnakeMap[i].startPos
+            cells[startPosition[0]][startPosition[1]] =  enumCell.empty
+            goalPosition = SnakeMap[i].goalPos
+            cells[goalPosition[0]][goalPosition[1]] =  enumCell.empty
+        }
+
         // Initialize exit
         goalPosition = SnakeMap[index].goalPos
         cells[goalPosition[0]][goalPosition[1]] =  enumCell.exit
-        startPosition = SnakeMap[index].startPos
-        cells[startPosition[0]][startPosition[1]] =  enumCell.empty
+
     }
 
     that.isExit = function(x,y){
