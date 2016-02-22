@@ -63,6 +63,8 @@ var Map = function(sizeX, sizeY, SnakeMap) {
     that.put = function(content, x, y){
         // console.log("cellsput: ",cells);
         // console.log(x,", ", y);
+        console.log("x",x)
+        console.log("y",y)
 
         if (0 <= y && 0 <= x && y < rows && x < columns) {
             if (cells[x][y] == enumCell.exit || cells[x][y] == enumCell.empty) {

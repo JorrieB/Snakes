@@ -11,6 +11,7 @@ var cellHeight = 100
 var timeStep = 0
 var activeSnake
 var pastSnakes = [] 
+var keyboardLock = false;
 
 // var game = new Phaser.Game(COLS * FONT, ROWS * FONT, Phaser.CANVAS, null, {
 var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, null, {
@@ -25,6 +26,9 @@ var map = Map(ROWS, COLS, snakeData);
 
 function onKeyUp(event) {
         // act on player input
+        if (keyboardLock){
+            return
+        }
         var acted = false
         switch (event.keyCode) {
                 case Phaser.Keyboard.LEFT:
@@ -42,30 +46,28 @@ function onKeyUp(event) {
                 case Phaser.Keyboard.DOWN:
                         acted = activeSnake.move(DIRECTION_ENUM.DOWN)
                         break
-                // case Phaser.Keyboard.ONE:
-                //             console.log("Time going to rollback")
-                //             rollBackTime(player);
+                 case Phaser.Keyboard.ONE:
+                             console.log("Time going to rollback")
+                             rewind();
         }
 
         // Check if the change of direction was allowed
         if (acted) {
                 timeStep++
-                updateBoard();
-                drawUpdatedBoard();
+                update()
         }
 
 }
 
 //
 function nextSnake() {
+        unlockKeyboard()
         timeStep = 0
         pastSnakes.push(activeSnake)
         var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
-        console.log(snakeProperties)
         if (snakeProperties != null) {
                 activeSnake = createSnakeWith(snakeProperties)
-                updateBoard()
-                drawUpdatedBoard()
+                update()
         } else {
                 gameWin()
         }
@@ -79,19 +81,27 @@ function createSnakeWith(properties){
 
 //
 function gameWin(){
+        signalEvent("Congratulations, you win!")
+        lockKeyboard()
         console.log("You win!")
 }
 
 function collision(){
+        // Change the event text back to default
+        signalEvent("...")
+        // Restart the session with current snake
+        unlockKeyboard()
         var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
         activeSnake = createSnakeWith(snakeProperties)
         timeStep = 0
-        updateBoard()
-        drawUpdatedBoard()
+        update()
 }
 
 //updates view of board according to current timestep
 function updateBoard() {
+        // Update text
+        signalSnakeIndex(pastSnakes.length, snakeData.length)
+        signalTime(timeStep)
         map.clear(pastSnakes.length)
         
         SnakeHeadPosition = activeSnake.getPositionAtTime(timeStep)[0];
@@ -101,10 +111,13 @@ function updateBoard() {
 
         if (!(collCoord1 == null && collCoord2 == null)) {
                 //game over
-                collision()
+                signalEvent("You bumped into something else!")
+                lockKeyboard()
+                setTimeout(collision, 2050)
         }
         if (toCallExit) {
-            console.log("before",  timeStep)
+            lockKeyboard()
+            signalEvent("You reached an exit!")
             exitBoard();
         }
 }
@@ -225,29 +238,53 @@ function exitBoard() {
             drawUpdatedBoard();
             exitBoard()
         }else{
+            signalEvent("...")
+            drawUpdatedBoard();
             nextSnake()
         }
     }, 250);
 }
 
+
 // stub
 function preload() {
     game.load.image('snake', './images/snake.png');
     game.load.image('shadow', './images/apple.png');
+
 }
 
-function create() {
-
+function create() { 
+    //Center the game
+    this.game.stage.scale.pageAlignHorizontally = true;
+    this.game.stage.scale.pageAlignVeritcally = true;
+    this.game.stage.scale.refresh();
 	// init keyboard commands
 	game.input.keyboard.addCallbacks(null, null, onKeyUp);
 
     map.clear(pastSnakes.length);
     activeSnake = createSnakeWith(map.getSnakeAtIndex(pastSnakes.length));
-    updateBoard()
-    drawUpdatedBoard();
-
+    update()
 }
 
-
+// Update the internal database in the board, and update the canvas
 function update() {
+    updateBoard()
+    drawUpdatedBoard();
+}
+
+// Rewind time to second to previous snake
+function rewind(){
+    timeStep = 0
+    pastSnakes.pop()
+    var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
+    activeSnake = createSnakeWith(snakeProperties)
+    update()
+}
+
+function lockKeyboard(){
+    keyboardLock = true
+}
+
+function unlockKeyboard(){
+    keyboardLock = false
 }
