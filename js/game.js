@@ -50,6 +50,7 @@ function onKeyUp(event) {
 
 //
 function nextSnake() {
+        timeStep = 0
         pastSnakes.push(activeSnake)
         var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
         if snakeProperties != null {
