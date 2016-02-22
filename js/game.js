@@ -11,7 +11,7 @@ var cellHeight = 100
 var timeStep = 0
 var activeSnake
 var pastSnakes = [] 
-
+var keyboardLock = false;
 
 // var game = new Phaser.Game(COLS * FONT, ROWS * FONT, Phaser.CANVAS, null, {
 var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, null, {
@@ -26,6 +26,9 @@ var map = Map(ROWS, COLS, snakeData);
 
 function onKeyUp(event) {
         // act on player input
+        if (keyboardLock){
+            return
+        }
         var acted = false
         switch (event.keyCode) {
                 case Phaser.Keyboard.LEFT:
@@ -58,6 +61,7 @@ function onKeyUp(event) {
 
 //
 function nextSnake() {
+        unlockKeyboard()
         timeStep = 0
         pastSnakes.push(activeSnake)
         var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
@@ -84,6 +88,7 @@ function collision(){
         // Change the event text back to default
         signalEvent("...")
         // Restart the session with current snake
+        unlockKeyboard()
         var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
         activeSnake = createSnakeWith(snakeProperties)
         timeStep = 0
@@ -102,9 +107,11 @@ function updateBoard() {
         if (!(collCoord1 == null && collCoord2 == null)) {
                 //game over
                 signalEvent("You bumped into something else!")
+                lockKeyboard()
                 setTimeout(collision, 2050)
         }
         if (toCallExit) {
+            lockKeyboard()
             exitBoard();
         }
 }
@@ -185,4 +192,12 @@ function rewind(){
     var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
     activeSnake = createSnakeWith(snakeProperties)
     update()
+}
+
+function lockKeyboard(){
+    keyboardLock = true
+}
+
+function unlockKeyboard(){
+    keyboardLock = false
 }
