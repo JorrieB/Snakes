@@ -40,10 +40,12 @@ function onKeyUp(event) {
                 //             rollBackTime(player);
         }
 
+        // Check if the change of direction was allowed
         if (acted) {
                 timeStep++
                 updateBoard()
         }
+
 }
 
 //
@@ -68,17 +70,24 @@ function gameWin(){
         console.log("You win!")
 }
 
+function collision(){
+        var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
+        activeSnake = createSnakeWith(snakeProperties)
+        timeStep = 0
+}
+
 //updates view of board according to current timestep
 function updateBoard() {
         map.clear(pastSnakes.length)
-
-        var collision1 = updateSnakes(4,[activeSnake])
-        var collision2 = updateSnakes(3,pastSnakes)
+        
+        var collCoord1 = drawSnakes(4,[activeSnake])
+        var collCoord2 = drawSnakes(3,pastSnakes)
 
         if (!(collision1 == null && collision2 == null)) {
                 //game over
+                collision()
         }
-        
+
 }
 
 //takes array of snakes, updates map according to their positions

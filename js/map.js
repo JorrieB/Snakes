@@ -30,8 +30,8 @@ var Map = function(sizeX, sizeY, SnakeMap) {
             cells[x][rows - 1] = enumCell.border     
             }  
         // Initialize exit
-        exitPosition = SnakeMap[index].end
-        cells[exitPosition.x][exitPosition.y] =  enumCell.exit
+        goalPosition = SnakeMap[index].goalPos
+        cells[goalPosition[0]][goalPosition[1]] =  enumCell.exit
     }
 
     that.get = function(x, y){

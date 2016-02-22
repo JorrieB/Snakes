@@ -3,7 +3,7 @@ var Snake = function(length,start,goal,heading){
 
 	var x = start[0]
 	var y = start[1]
-	var story = [(x,y)]
+	var story = [[x,y]]
 	var length = length
 	var heading = heading
 	var goalPos = goal
@@ -44,7 +44,7 @@ var Snake = function(length,start,goal,heading){
 			break
 		}
 		that.heading = direction
-		story.push((x,y))
+		story.push([x,y])
 		return true
 	}
 
