@@ -81,6 +81,8 @@ function createSnakeWith(properties){
 
 //
 function gameWin(){
+        signalEvent("Congratulations, you win!")
+        lockKeyboard()
         console.log("You win!")
 }
 
@@ -115,6 +117,7 @@ function updateBoard() {
         }
         if (toCallExit) {
             lockKeyboard()
+            signalEvent("You reached an exit!")
             exitBoard();
         }
 }
@@ -155,6 +158,7 @@ function exitBoard() {
             drawUpdatedBoard();
             exitBoard()
         }else{
+            signalEvent("...")
             drawUpdatedBoard();
             nextSnake()
         }
