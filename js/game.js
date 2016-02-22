@@ -41,7 +41,7 @@ function onKeyUp(event) {
         }
 
         // Check if the change of direction was allowed
-        if acted {
+        if (acted) {
                 timeStep++
                 updateBoard()
         }
@@ -53,7 +53,7 @@ function nextSnake() {
         timeStep = 0
         pastSnakes.push(activeSnake)
         var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
-        if snakeProperties != null {
+        if (snakeProperties != null) {
                 activeSnake = createSnakeWith(snakeProperties)
         } else {
                 gameWin()
@@ -80,25 +80,40 @@ function collision(){
 //updates view of board according to current timestep
 function updateBoard() {
         map.clear(pastSnakes.length)
-
+        
         var collCoord1 = drawSnakes(4,[activeSnake])
         var collCoord2 = drawSnakes(3,pastSnakes)
 
-        if !(collCoord1 == null && collCoord2 == null){
+        if (!(collision1 == null && collision2 == null)) {
+                //game over
                 collision()
         }
 
+        // Check if the snake reached the exit. If it did, let it leave the board and roll back time
+        SnakeHeadPosition = snake.getPositionAtTime(timeStep)[0]
+        positionType = map.get(SnakeHeadPosition[0], SnakeHeadPosition[1])
+        if (positionType == map.enumCells.exit){
+            exitBoard()
+            rollBackTime()
+        }
+}
+
+// Reset the timeStep to 0 and create a new snake
+function RollBackTime{
+    timeStep = 0
+    nextSnake()
 }
 
 //takes array of snakes, updates map according to their positions
 //returns null if no collision occurred, else returns coordinate of collision
-function drawSnakes(cellVal,snakeArray){
+
+function updateSnakes(cellVal,snakeArray){
         collisionCoordinate = null
-        for snake in snakeArray{
+        for (snake in snakeArray) {
                 var positions = snake.getPositionAtTime(timeStep)
-                for position in positions{
+                for (position in positions) {
                         var collision = map.put(cellVal,currentSnakePosition[0],currentSnakePosition[1]) //input at position the value for current snake
-                        if collision {
+                        if (collision) {
                                 collisionCoordinate = (currentSnakePosition[0],currentSnakePosition[1])
                         }
                 }
@@ -107,7 +122,13 @@ function drawSnakes(cellVal,snakeArray){
 }
 
 function drawInitBoard() {
+    for (var x = 0; x < map.rows; x++) {
+        for (var y = 0; y < map.columns; y++) {
+            var newSquare = new Phaser.Rectangle(x*100, y*100, 100, 100);
+            game.debug.renderRectangle(newSquare,'#FFF');
 
+        }
+    }
 }
 
 function drawUpdatedBoard() {
@@ -118,32 +139,32 @@ function drawUpdatedBoard() {
 
             // if empty cell:
             if (map.get(x,y) == 0) {
-                Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#FFF')
+                // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
+                // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#FFF')
             }
 
             // if border cell:
             if (map.get(x,y) == 1) {
-                Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#B3B3B3')
+                // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
+                // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#B3B3B3')
             }
 
             // if exit cell:
             if (map.get(x,y) == 2) {
-                Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#305AFF')
+                // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
+                // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#305AFF')
             }
 
             // if pastSnakes cell:
             if (map.get(x,y) == 3) {
-                Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#DB95B8')
+                // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
+                // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#DB95B8')
             }
 
             // if currentSnakes cell:
             if (map.get(x,y) == 4) {
-                Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#FFADD6')
+                // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
+                // game.debug.renderRectangle(map.cells[activePosition.y][activePosition.x],'#FFADD6')
             }
             
         }
@@ -180,6 +201,7 @@ function preload() {
 function create() {
 	// init keyboard commands
 	game.input.keyboard.addCallbacks(null, null, onKeyUp)
+    drawInitBoard();
 }
 
 
