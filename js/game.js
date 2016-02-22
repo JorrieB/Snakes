@@ -19,9 +19,9 @@ var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, n
         render: drawUpdatedBoard
 });
 
-var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT},
-                 {snakeLength:4, startPos:[6, 2], goalPos:[2, 0], heading:DIRECTION_ENUM.LEFT},
-                 {snakeLength:5, startPos:[4, 0], goalPos:[2, 6], heading:DIRECTION_ENUM.DOWN}];
+var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
+                 {snakeLength:4, startPos:[5, 0], goalPos:[2, 0], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'},
+                 {snakeLength:5, startPos:[4, 0], goalPos:[2, 6], heading:DIRECTION_ENUM.DOWN, snakeColor:'#FF2B60'}];
 var map = Map(ROWS, COLS, snakeData);
 
 function onKeyUp(event) {
@@ -76,7 +76,7 @@ function nextSnake() {
 //
 function createSnakeWith(properties){
         //snake params = length,start,goal,startHeading
-        return Snake(properties.snakeLength,properties.startPos,properties.goalPos,properties.heading)
+        return Snake(properties.snakeLength,properties.startPos,properties.goalPos,properties.heading, properties.snakeColor)
 }
 
 //
@@ -200,14 +200,15 @@ function drawUpdatedBoard() {
                 // game.add.sprite(x*100, y*100, 'shadow');
                 // square.tint = '#DB95B8';
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                game.debug.renderRectangle(newSquare,'#E5FF00')
+                game.debug.renderRectangle(newSquare,'#6d6d6d')
             }
 
             // if currentSnakes cell:
             if (map.get(x,y) == 4) {
                 // game.add.sprite(x*100, y*100, 'snake');
                 // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                game.debug.renderRectangle(newSquare,'#FFADD6')
+                // console.log(activeSnake.getColor());
+                game.debug.renderRectangle(newSquare, activeSnake.getColor());
             }
             
         }
