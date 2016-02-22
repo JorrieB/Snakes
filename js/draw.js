@@ -1,3 +1,10 @@
+// Pick rainbowcolors for your snakes. Qucik and dirty must REDO. Only work for < 7 snakes
+rainbowColors = ["#FF0000","#FF7F00","FFFF00", "00FF00", "#0000FF", " #4B0082", "#8B00FF"]
+
+function getRainbowColor(index, snakesNumbers){
+    colorIndex = Math.floor(index * 7 / snakesNumbers)
+    return rainbowColors[colorIndex]
+}
 function drawUpdatedBoard() {
     game.stage.backgroundColor = '#061f27';
     for (var x = 0; x < map.getRows(); x++) {
