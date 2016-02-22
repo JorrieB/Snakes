@@ -109,18 +109,6 @@ function updateBoard() {
         }
 }
 
-// function isExit(){
-//             // Check if the snake reached the exit. If it did, let it leave the board
-//         SnakeHeadPosition = activeSnake.getPositionAtTime(timeStep)[activeSnake.getPositionAtTime(timeStep).length - 1];
-//         // console.log(activeSnake);
-//         // console.log(activeSnake.getPositionAtTime(timeStep));
-//         positionType = map.get(SnakeHeadPosition[0], SnakeHeadPosition[1])
-//         console.log("checking the position",  positionType)
-//         if (positionType == map.getEnumCell().exit){
-//             exitBoard();
-//         }
-
-// }
 
 
 //takes array of snakes, updates map according to their positions
@@ -134,6 +122,7 @@ function updateSnakes(cellVal,snakeArray){
                 console.log(positions)
                 for (i in positions) {
                         var currentSnakePosition = positions[i];
+                        console.log(currentSnakePosition)
                         // console.log(currentSnakePosition)
                         var collision = !(map.put(cellVal,currentSnakePosition[0],currentSnakePosition[1])) //input at position the value for current snake
                         if (collision) {
@@ -169,7 +158,7 @@ function drawUpdatedBoard() {
             // enumCells
             // var square = game.add.sprite(x*100, y*100, 'shadow');
 
-            var newSquare = new Phaser.Rectangle(x * 100, y * 100, 50, 50);
+            var newSquare = new Phaser.Rectangle(x * 100, y * 100, 98, 98);
             // game.debug.renderRectangle(newSquare,'#FFF');
 
             // console.log(x, " ", y, " ", "enums: ", map.get(x,y));
@@ -239,7 +228,7 @@ function exitBoard() {
         }else{
             nextSnake()
         }
-    }, 1000);
+    }, 250);
 }
 
 // stub
@@ -255,6 +244,7 @@ function create() {
 
     map.clear(pastSnakes.length);
     activeSnake = createSnakeWith(map.getSnakeAtIndex(pastSnakes.length));
+    updateBoard()
     drawUpdatedBoard();
 
 }
