@@ -57,10 +57,19 @@ class Wall():
 #print w.get()
 
 #Level 6
+#w = Wall(7,7)
+#w.square(3,3,1)
+#w.rectangle((1,0), (2,3))
+#w.rectangle((0,5),(3,6))
+#w.rectangle((4,1),(7,2))
+#w.rectangle((5,4),(6,7))
+#print w.get()
+
+#Loop
 w = Wall(7,7)
-w.square(3,3,1)
-w.rectangle((1,0), (2,3))
-w.rectangle((0,5),(3,6))
-w.rectangle((4,1),(7,2))
-w.rectangle((5,4),(6,7))
+w.rectangle((0,0),(3,3))
+
+w.rectangle((4,4),(7,7))
+w.rectangle((1,4),(3,6))
+w.rectangle((4,1),(6,3))
 print w.get()
