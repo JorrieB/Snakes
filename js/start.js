@@ -1,6 +1,6 @@
 var Start = {
     preload : function() {
-        game.load.image('menu', './images/snakesTitle.png');
+        game.load.image('menu', './images/snakesTitle2.png');
     },
 
     create : function() {
