@@ -20,7 +20,6 @@ var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, n
 
 var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
                  {snakeLength:4, startPos:[5, 0], goalPos:[2, 0], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'},
-
                  {snakeLength:5, startPos:[4, 0], goalPos:[2, 6], heading:DIRECTION_ENUM.DOWN, snakeColor:'#cc33ff'}];
 
 // Create Empty wallmap
