@@ -37,8 +37,8 @@ for (var x = 0; x < ROWS; x++) {
 // levels.push(hardLevel)
 
 // First level
-var snakeData = [{snakeLength:3, startPos:[0, 4], goalPos:[6, 4], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
-                  {snakeLength:4, startPos:[4, 0], goalPos:[0, 4], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'}];
+var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 3], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
+                  {snakeLength:4, startPos:[3, 0], goalPos:[3, 6], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'}];
 
 firstLevel = {snakes:snakeData, wall:wallData}
 levels.push(firstLevel)
@@ -55,6 +55,8 @@ secondLevel = {snakes:snakeData, wall:wallData}
 levels.push(secondLevel)
 
 // Third level
+
+
 
 var map;
 
