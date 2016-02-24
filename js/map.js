@@ -51,6 +51,7 @@ var Map = function(sizeX, sizeY, SnakeMap) {
         goalPosition = SnakeMap[index].goalPos
         cells[goalPosition[0]][goalPosition[1]].setExit(true)
         cells[goalPosition[0]][goalPosition[1]].setOccupied(false)
+        cells[goalPosition[0]][goalPosition[1]].setColor(SnakeMap[index].snakeColor)
 
 
     }
