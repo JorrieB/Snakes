@@ -6,6 +6,7 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
     var exit
 
     var collisionColor = '#FF0000'
+    var wallColor = '#B3B3B3'
 
     var enumCell= {
         empty:0,
@@ -47,6 +48,7 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
         }
 
     }
+
 
     // Empty all of the entry/exit cells
     that.initPortals = function(index){
@@ -95,7 +97,6 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
         // console.log(x,", ", y);
         console.log("x",x)
         console.log("y",y)
-        console.log("put")
         if (0 <= y && 0 <= x && y < rows && x < columns) {
             if (!cells[x][y].isOccupied()){
                 cells[x][y].setColorAndOccupy(color)
@@ -103,13 +104,7 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
             }
             cells[x][y].setColorAndOccupy(collisionColor)
             return false
-
-            // if (cells[x][y] == enumCell.exit || cells[x][y] == enumCell.empty) {
-            //     cells[x][y] = content
-            //     return true
-            // }
         }
-        // result = false
     }
 
     that.getRows = function() {
