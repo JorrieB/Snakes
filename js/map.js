@@ -1,4 +1,4 @@
-var Map = function(sizeX, sizeY, SnakeMap) {
+var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
 	var that = Object.create(Map.prototype)
 	var cells = []
 	var rows = sizeX
@@ -18,26 +18,40 @@ var Map = function(sizeX, sizeY, SnakeMap) {
 
     // Initialize a new empty map
 	that.clear = function(index) {
-        // Initialize empty cells
+        that.clearCells()
+        that.initWalls()
+        that.initPortals(index)
+    }
+
+    // Initialize empty cells
+    that.clearCells = function(){
         cells = [];
             // console.log("cells0: ",cells);
         for (var x = 0; x < rows; x++) {
-        	var newRow = []
-        	for (var y = 0; y < columns; y++) {
-        		newRow.push(Cell())
-        	}
+            var newRow = []
+            for (var y = 0; y < columns; y++) {
+                newRow.push(Cell())
+            }
             cells.push(newRow)
         }
-        // console.log("cells1: ",cells);
-        // Initialize the walls
-        for (var x = 0; x < rows; x++) {
-            cells[0][x].setColorAndOccupy(wallColor)
-            cells[x][0].setColorAndOccupy(wallColor)
-            cells[rows - 1][x].setColorAndOccupy(wallColor)
-            cells[x][columns - 1].setColorAndOccupy(wallColor)
-        }  
 
-        // Empty all of the entry/exit cells
+    }
+
+    that.initWalls = function(){
+        // Insert the wall
+        for (var x = 0; x < rows; x++) {
+            for (var y = 0; y < columns; y++) {
+                if (wallMap[x][y] == 1){
+                    cells[x][y].setColorAndOccupy('#B3B3B3')
+                }
+            }
+        }
+
+    }
+
+
+    // Empty all of the entry/exit cells
+    that.initPortals = function(index){
         for (var i = 0; i < SnakeMap.length; i++){
             startPosition = SnakeMap[i].startPos
             cells[startPosition[0]][startPosition[1]].setColor('#FFF')
@@ -53,8 +67,8 @@ var Map = function(sizeX, sizeY, SnakeMap) {
         cells[goalPosition[0]][goalPosition[1]].setOccupied(false)
         cells[goalPosition[0]][goalPosition[1]].setColor(SnakeMap[index].snakeColor)
 
-
     }
+
 
     that.isExit = function(x,y){
         return cells[x][y].isExit()
