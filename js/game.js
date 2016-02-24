@@ -13,28 +13,49 @@ var activeSnake
 var pastSnakes = [] 
 var keyboardLock = false;
 
-// Level 2
+
+var levelIndex = 0;
+var levels = []
+
+// Sequences of levels
+
+// Hard Level
 // var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
 //                  {snakeLength:4, startPos:[5, 0], goalPos:[2, 0], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'},
 //                  {snakeLength:5, startPos:[4, 0], goalPos:[2, 6], heading:DIRECTION_ENUM.DOWN, snakeColor:'#FF2B60'}];
 
-// // Original Level
-// // Create Empty wallmap
-// wallData = []
-// for (var x = 0; x < ROWS; x++) {
-//     var newRow = []
-//     for (var y = 0; y < COLS; y++) {
-//         newRow.push(0)
-//     }
-//     wallData.push(newRow)
-// }
+// Create Empty wallmap
+wallData = []
+for (var x = 0; x < ROWS; x++) {
+    var newRow = []
+    for (var y = 0; y < COLS; y++) {
+        newRow.push(0)
+    }
+    wallData.push(newRow)
+}
 
-// Level 1
+// hardLevel = {snakes:snakeData, wall:wallData}
+// levels.push(hardLevel)
+
+// First level
+var snakeData = [{snakeLength:3, startPos:[0, 4], goalPos:[6, 4], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
+                  {snakeLength:4, startPos:[4, 0], goalPos:[0, 4], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'}];
+
+firstLevel = {snakes:snakeData, wall:wallData}
+levels.push(firstLevel)
+
+// Second level
 var snakeData = [{snakeLength:3, startPos:[0, 4], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
-                 {snakeLength:4, startPos:[6, 4], goalPos:[0, 2], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'}];
+                  {snakeLength:4, startPos:[6, 4], goalPos:[0, 2], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'}];
 
 var wallData = [[0, 0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0, 0]]
-var map = Map(ROWS, COLS, snakeData, wallData);
+
+secondLevel = {snakes:snakeData, wall:wallData}
+levels.push(secondLevel)
+
+// Third level
+var map;
+
 
 var Game = {
 
@@ -45,7 +66,9 @@ var Game = {
         // this.game.stage.scale.refresh();
         // init keyboard commands
         game.input.keyboard.addCallbacks(null, null, onKeyUp);
-
+        firstLevel = levels[0]
+        console.log(firstLevel.wall)    
+        map = Map(ROWS, COLS, firstLevel.snakes, firstLevel.wall);
         map.clear(pastSnakes.length);
         activeSnake = createSnakeWith(map.getSnakeAtIndex(pastSnakes.length));
         update()
@@ -54,7 +77,6 @@ var Game = {
     render : function() {
         drawUpdatedBoard()
     }
-
 };
 
 function onKeyUp(event) {
@@ -65,18 +87,22 @@ function onKeyUp(event) {
         var acted = false
         switch (event.keyCode) {
                 case Phaser.Keyboard.LEFT:
+                        if (activeSnake.getHead()[0] - 1 < 0){return}
                         acted = activeSnake.move(DIRECTION_ENUM.LEFT)
                         break
  
                 case Phaser.Keyboard.RIGHT:
+                        if (activeSnake.getHead()[0] + 1 >= COLS){return}
                         acted = activeSnake.move(DIRECTION_ENUM.RIGHT)
                         break
  
                 case Phaser.Keyboard.UP:
+                        if (activeSnake.getHead()[1] - 1 < 0){return}
                         acted = activeSnake.move(DIRECTION_ENUM.UP)
                         break
  
                 case Phaser.Keyboard.DOWN:
+                        if (activeSnake.getHead()[1] + 1 >= ROWS){return}
                         acted = activeSnake.move(DIRECTION_ENUM.DOWN)
                         break
                  case Phaser.Keyboard.ONE:
@@ -114,9 +140,22 @@ function createSnakeWith(properties){
 
 //
 function gameWin(){
+    levelIndex += 1
+    level = levels[levelIndex]
+    if (levelIndex == levels.length){  
         signalEvent("Congratulations, you win!")
         lockKeyboard()
         console.log("You win!")
+    }else{
+        console.log("new level")
+        setTimeout(function () {
+            map = Map(ROWS, COLS, level.snakes, level.wall);
+            timeStep = 0
+            pastSnakes = []
+            activeSnake = createSnakeWith(map.getSnakeAtIndex(pastSnakes.length));
+            update()
+        }, 1000);
+    }
 }
 
 function collision(){
@@ -146,19 +185,6 @@ function updateBoard() {
                 //game over
                 signalEvent("You bumped into something else!")
                 lockKeyboard()
-                
-                // if (collCoord1 != null) {
-                //     console.log("collision1!",collCoord1[0],collCoord1[1]);
-                //     var collisionSquare = new Phaser.Rectangle(collCoord1[0] * 100 + 2, collCoord1[1] * 100 + 2, 96, 96);
-                //     game.debug.renderRectangle(collisionSquare,'#000');
-                // } 
-
-                // if (collCoord2 != null) {
-                //     console.log("collision2!",collCoord2[0],collCoord2[1]);
-                //     var collisionSquare = new Phaser.Rectangle(collCoord2[0] * 100 + 2, collCoord2[1] * 100 + 2, 96, 96);
-                //     game.debug.renderRectangle(collisionSquare,'#000');
-                // }
-                
                 setTimeout(collision, 2050)
         }
         if (toCallExit) {
