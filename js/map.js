@@ -18,6 +18,7 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
 
     // Initialize a new empty map
 	that.clear = function(index) {
+        console.log(wallMap)
         that.clearCells()
         that.initWalls()
         that.initPortals(index)
@@ -42,6 +43,7 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
         // Insert the wall
         for (var x = 0; x < rows; x++) {
             for (var y = 0; y < columns; y++) {
+                console.log(wallMap)
                 if (wallMap[x][y] == 1){
                     cells[x][y].setColorAndOccupy('#B3B3B3')
                 }

@@ -13,12 +13,6 @@ var activeSnake
 var pastSnakes = [] 
 var keyboardLock = false;
 
-var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, null, {
-        create: create,
-        render: drawUpdatedBoard
-});
-
-
 // var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
 //                  {snakeLength:4, startPos:[5, 0], goalPos:[2, 0], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'},
 //                  {snakeLength:5, startPos:[4, 0], goalPos:[2, 6], heading:DIRECTION_ENUM.DOWN, snakeColor:'#FF2B60'}];
@@ -34,15 +28,36 @@ var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, n
 //     wallData.push(newRow)
 // }
 
-var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 4], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
-                 {snakeLength:4, startPos:[6, 3], goalPos:[0, 4], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'}];
+var snakeData = [{snakeLength:3, startPos:[0, 4], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
+                 {snakeLength:4, startPos:[6, 4], goalPos:[0, 2], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'}];
 
 console.log("Hi")
-// var wallData = [[0, 0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0, 0]]
-var wallData = 1
+var wallData = [[0, 0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0, 0]]
 console.log(wallData)
 
+
 var map = Map(ROWS, COLS, snakeData, wallData);
+
+var Game = {
+
+    create : function() {
+        //Center the game
+        // this.game.stage.scale.pageAlignHorizontally = true;
+        // this.game.stage.scale.pageAlignVeritcally = true;
+        // this.game.stage.scale.refresh();
+        // init keyboard commands
+        game.input.keyboard.addCallbacks(null, null, onKeyUp);
+
+        map.clear(pastSnakes.length);
+        activeSnake = createSnakeWith(map.getSnakeAtIndex(pastSnakes.length));
+        update()
+    },
+
+    render : function() {
+        drawUpdatedBoard()
+    }
+
+};
 
 function onKeyUp(event) {
         // act on player input
@@ -210,20 +225,6 @@ function exitBoard() {
 function preload() {
     game.load.image('snake', './images/snake.png');
     game.load.image('shadow', './images/apple.png');
-
-}
-
-function create() { 
-    //Center the game
-    this.game.stage.scale.pageAlignHorizontally = true;
-    this.game.stage.scale.pageAlignVeritcally = true;
-    this.game.stage.scale.refresh();
-	// init keyboard commands
-	game.input.keyboard.addCallbacks(null, null, onKeyUp);
-
-    map.clear(pastSnakes.length);
-    activeSnake = createSnakeWith(map.getSnakeAtIndex(pastSnakes.length));
-    update()
 }
 
 // Update the internal database in the board, and update the canvas
