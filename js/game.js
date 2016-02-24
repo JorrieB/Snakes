@@ -13,11 +13,6 @@ var activeSnake
 var pastSnakes = [] 
 var keyboardLock = false;
 
-// var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, null, {
-//         create: create,
-//         render: drawUpdatedBoard
-// });
-
 var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
                  {snakeLength:4, startPos:[5, 0], goalPos:[2, 0], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'},
 

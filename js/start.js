@@ -10,5 +10,10 @@ var Start = {
     startGame : function () {
         // Change the state to the actual game.
         game.state.start('Game');
+        showInfo();
     }
 };
+
+function showInfo () {
+  document.getElementById('infoBox').style.display = 'block';
+}

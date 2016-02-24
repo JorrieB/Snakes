@@ -33,17 +33,17 @@ function drawUpdatedBoard() {
     //     }
 
 function signalEvent(text){
-    // document.getElementById("eventText").innerHTML = text
+    document.getElementById("eventText").innerHTML = text
 }
 
 function signalSnakeIndex(currentIndex, snakesNumbers){
     text = "Snake " + (currentIndex + 1) + "/" + (snakesNumbers)
-    // document.getElementById("snakeIndex").innerHTML = text
+    document.getElementById("snakeIndex").innerHTML = text
 }
 
 function signalTime(timeStep){
     text = "Time = " + timeStep
-    // document.getElementById("timeStep").innerHTML = text
+    document.getElementById("timeStep").innerHTML = text
  }
 
 // }
