@@ -45,7 +45,7 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
             for (var y = 0; y < columns; y++) {
                 console.log(wallMap)
                 if (wallMap[x][y] == 1){
-                    cells[x][y].setColorAndOccupy('#B3B3B3')
+                    cells[x][y].setColorAndOccupy(wallColor)
                 }
             }
         }
@@ -57,18 +57,20 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
     that.initPortals = function(index){
         for (var i = 0; i < SnakeMap.length; i++){
             startPosition = SnakeMap[i].startPos
+            //color start cell with snake color
+            // cells[startPosition[0]][startPosition[1]].setColor(SnakeMap[i].snakeColor)
+            //color start cell white
             cells[startPosition[0]][startPosition[1]].setColor('#FFF')
             cells[startPosition[0]][startPosition[1]].setOccupied(false)
             goalPosition = SnakeMap[i].goalPos
-            cells[goalPosition[0]][goalPosition[1]].setColor('#FFF')
+            cells[goalPosition[0]][goalPosition[1]].setColor(SnakeMap[i].snakeColor)
             cells[goalPosition[0]][goalPosition[1]].setOccupied(false)
+
         }
 
-        // Initialize exit
+        // Initialize current snake's exit
         goalPosition = SnakeMap[index].goalPos
         cells[goalPosition[0]][goalPosition[1]].setExit(true)
-        cells[goalPosition[0]][goalPosition[1]].setOccupied(false)
-        cells[goalPosition[0]][goalPosition[1]].setColor(SnakeMap[index].snakeColor)
 
     }
 

@@ -64,18 +64,22 @@ function onKeyUp(event) {
         var acted = false
         switch (event.keyCode) {
                 case Phaser.Keyboard.LEFT:
+                        if (activeSnake.getHead()[0] - 1 < 0){return}
                         acted = activeSnake.move(DIRECTION_ENUM.LEFT)
                         break
  
                 case Phaser.Keyboard.RIGHT:
+                        if (activeSnake.getHead()[0] + 1 >= COLS){return}
                         acted = activeSnake.move(DIRECTION_ENUM.RIGHT)
                         break
  
                 case Phaser.Keyboard.UP:
+                        if (activeSnake.getHead()[1] - 1 < 0){return}
                         acted = activeSnake.move(DIRECTION_ENUM.UP)
                         break
  
                 case Phaser.Keyboard.DOWN:
+                        if (activeSnake.getHead()[1] + 1 >= ROWS){return}
                         acted = activeSnake.move(DIRECTION_ENUM.DOWN)
                         break
                  case Phaser.Keyboard.ONE:
@@ -145,19 +149,6 @@ function updateBoard() {
                 //game over
                 signalEvent("You bumped into something else!")
                 lockKeyboard()
-                
-                // if (collCoord1 != null) {
-                //     console.log("collision1!",collCoord1[0],collCoord1[1]);
-                //     var collisionSquare = new Phaser.Rectangle(collCoord1[0] * 100 + 2, collCoord1[1] * 100 + 2, 96, 96);
-                //     game.debug.renderRectangle(collisionSquare,'#000');
-                // } 
-
-                // if (collCoord2 != null) {
-                //     console.log("collision2!",collCoord2[0],collCoord2[1]);
-                //     var collisionSquare = new Phaser.Rectangle(collCoord2[0] * 100 + 2, collCoord2[1] * 100 + 2, 96, 96);
-                //     game.debug.renderRectangle(collisionSquare,'#000');
-                // }
-                
                 setTimeout(collision, 2050)
         }
         if (toCallExit) {
