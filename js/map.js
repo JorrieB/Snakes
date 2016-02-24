@@ -128,4 +128,4 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
     }
 
         return that
-    }
+};
