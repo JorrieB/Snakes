@@ -13,10 +13,10 @@ var activeSnake
 var pastSnakes = [] 
 var keyboardLock = false;
 
-var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, null, {
-        create: create,
-        render: drawUpdatedBoard
-});
+// var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, null, {
+//         create: create,
+//         render: drawUpdatedBoard
+// });
 
 var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
                  {snakeLength:4, startPos:[5, 0], goalPos:[2, 0], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'},
@@ -32,8 +32,28 @@ for (var x = 0; x < ROWS; x++) {
     wallData.push(newRow)
 }
 
-
 var map = Map(ROWS, COLS, snakeData, wallData);
+
+var Game = {
+
+    create : function() {
+        //Center the game
+        // this.game.stage.scale.pageAlignHorizontally = true;
+        // this.game.stage.scale.pageAlignVeritcally = true;
+        // this.game.stage.scale.refresh();
+        // init keyboard commands
+        game.input.keyboard.addCallbacks(null, null, onKeyUp);
+
+        map.clear(pastSnakes.length);
+        activeSnake = createSnakeWith(map.getSnakeAtIndex(pastSnakes.length));
+        update()
+    },
+
+    render : function() {
+        drawUpdatedBoard()
+    }
+
+};
 
 function onKeyUp(event) {
         // act on player input
@@ -201,20 +221,6 @@ function exitBoard() {
 function preload() {
     game.load.image('snake', './images/snake.png');
     game.load.image('shadow', './images/apple.png');
-
-}
-
-function create() { 
-    //Center the game
-    this.game.stage.scale.pageAlignHorizontally = true;
-    this.game.stage.scale.pageAlignVeritcally = true;
-    this.game.stage.scale.refresh();
-	// init keyboard commands
-	game.input.keyboard.addCallbacks(null, null, onKeyUp);
-
-    map.clear(pastSnakes.length);
-    activeSnake = createSnakeWith(map.getSnakeAtIndex(pastSnakes.length));
-    update()
 }
 
 // Update the internal database in the board, and update the canvas

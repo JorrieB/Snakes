@@ -1,4 +1,3 @@
-
 // map dimensions
 var ROWS =  7 //model's number of rows
 var COLS =  7 
@@ -32,7 +31,7 @@ var Game = {
     },
 
     render : function() {
-        drawUpdatedBoard();
+        drawUpdatedBoard()
     }
 
 };
@@ -213,7 +212,7 @@ function unlockKeyboard(){
 }
 
 function drawUpdatedBoard() {
-
+    console.log("draw?")
     game.stage.backgroundColor = '#061f27';
     for (var x = 0; x < map.getRows(); x++) {
         for (var y = 0; y < map.getColumns(); y++) {
