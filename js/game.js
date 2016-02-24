@@ -73,6 +73,16 @@ var wallData = [[1, 1, 1, 1, 1, 1, 1], [1, 0, 0, 0, 0, 0, 0], [1, 0, 0, 1, 0, 1,
 fourthLevel = {snakes:snakeData, wall:wallData}
 levels.push(fourthLevel)
 
+// Fourth and  a half
+snakeData = [{snakeLength:6, startPos:[5, 3], goalPos:[0,0], heading:DIRECTION_ENUM.UP, snakeColor:'#E5FF00'},
+                 {snakeLength:4, startPos:[3, 1], goalPos:[0, 6], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'},
+                 {snakeLength:6, startPos:[1, 3], goalPos:[6, 6], heading:DIRECTION_ENUM.DOWN, snakeColor:'#FF2B60'},
+                 {snakeLength:4, startPos:[3, 5], goalPos:[6, 0], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#0000FF'}];
+
+wallData = [[0, 0, 0, 0, 0, 1, 0], [1, 1, 1, 0, 0, 1, 0], [0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 1, 1, 1], [0, 1, 0, 0, 0, 0, 0]]
+
+fourthHalfLevel = {snakes:snakeData, wall:wallData}
+levels.push(fourthHalfLevel)
 //Fifth level
 
 snakeData = [{snakeLength:5, startPos:[1, 5], goalPos:[6, 1], heading:DIRECTION_ENUM.UP, snakeColor:'#E5FF00'},
@@ -155,6 +165,7 @@ function nextSnake() {
         timeStep = 0
         pastSnakes.push(activeSnake)
         var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
+        console.log(snakeProperties)
         if (snakeProperties != null) {
                 activeSnake = createSnakeWith(snakeProperties)
                 update()
