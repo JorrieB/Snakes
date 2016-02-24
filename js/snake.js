@@ -30,27 +30,19 @@ var Snake = function(startLength,start,goal,initHeading, snakeColor){
 
 		switch(heading){
 			case 0:
-			// console.log(direction)
-			// console.log("RIGHT")
 			x += 1
 			break
 
 			case 1:
-			y -= 1	
-			// console.log(direction)
-			// console.log("UP")
+			y -= 1
 			break
 
 			case 2:
 			x -= 1
-			// console.log(direction)
-			// console.log("LEFT")
 			break
 
 			default:
 			y += 1
-			// console.log(direction)
-			// console.log("DOWN")
 			break
 		}
 
