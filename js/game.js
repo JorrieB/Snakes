@@ -186,7 +186,7 @@ function updateBoard() {
                 //game over
                 signalEvent("You bumped into something else!")
                 lockKeyboard()
-                setTimeout(collision, 2050)
+                setTimeout(collision, 1000)
         }
         if (toCallExit) {
             lockKeyboard()
