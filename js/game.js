@@ -39,7 +39,7 @@ for (var x = 0; x < ROWS; x++) {
 
 // First level
 var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 3], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
-                  {snakeLength:4, startPos:[3, 0], goalPos:[3, 6], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'}];
+                  {snakeLength:4, startPos:[3, 0], goalPos:[3, 6], heading:DIRECTION_ENUM.DOWN, snakeColor:'#2BFF95'}];
 
 firstLevel = {snakes:snakeData, wall:wallData}
 levels.push(firstLevel)
@@ -54,9 +54,35 @@ secondLevel = {snakes:snakeData, wall:wallData}
 levels.push(secondLevel)
 
 // Third level
+var snakeData = [{snakeLength:5, startPos:[0, 1], goalPos:[6, 1], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
+                 {snakeLength:3, startPos:[0, 5], goalPos:[6, 5], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#2BFF95'},
+                 {snakeLength:3, startPos:[6, 3], goalPos:[0, 3], heading:DIRECTION_ENUM.LEFT, snakeColor:'#FF2B60'}];
 
+var wallData = [[1, 0, 1, 0, 1, 0, 1], [1, 0, 0, 0, 0, 0, 1], [1, 0, 1, 1, 1, 0, 1], [1, 0, 0, 0, 0, 0, 1], [1, 0, 1, 1, 1, 0, 1], [1, 0, 0, 0, 0, 0, 1], [1, 0, 1, 0, 1, 0, 1]]
+
+thirdLevel = {snakes:snakeData, wall:wallData}
+levels.push(thirdLevel)
 var map;
 
+//Fourth level 
+var snakeData = [{snakeLength:4, startPos:[1, 1], goalPos:[1, 6], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
+                  {snakeLength:4, startPos:[6, 4], goalPos:[2, 2], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'}];
+
+var wallData = [[1, 1, 1, 1, 1, 1, 1], [1, 0, 0, 0, 0, 0, 0], [1, 0, 0, 1, 0, 1, 1], [1, 1, 1, 1, 0, 1, 1], [1, 1, 1, 1, 0, 1, 1], [1, 1, 1, 0, 0, 1, 1], [1, 1, 1, 0, 0, 1, 1]]
+
+fourthLevel = {snakes:snakeData, wall:wallData}
+levels.push(fourthLevel)
+
+//Fifth level
+
+snakeData = [{snakeLength:5, startPos:[1, 5], goalPos:[6, 1], heading:DIRECTION_ENUM.UP, snakeColor:'#E5FF00'},
+                 {snakeLength:5, startPos:[5, 1], goalPos:[1, 0], heading:DIRECTION_ENUM.DOWN, snakeColor:'#2BFF95'},
+                 {snakeLength:4, startPos:[1, 1], goalPos:[5, 6], heading:DIRECTION_ENUM.DOWN, snakeColor:'#FF2B60'},
+                 {snakeLength:4, startPos:[5, 5], goalPos:[0, 5], heading:DIRECTION_ENUM.LEFT, snakeColor:'#0000FF'}];
+
+var wallData = [[1, 1, 1, 1, 1, 0, 1], [0, 0, 0, 0, 0, 0, 1], [1, 0, 0, 0, 0, 0, 1], [1, 0, 0, 0, 0, 0, 1], [1, 0, 0, 0, 0, 0, 1], [1, 0, 0, 0, 0, 0, 0], [1, 0, 1, 1, 1, 1, 1]]
+fifthLevel = {snakes:snakeData, wall:wallData}
+levels.push(fifthLevel)
 
 var Game = {
 

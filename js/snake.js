@@ -19,9 +19,12 @@ var Snake = function(startLength,start,goal,initHeading, snakeColor){
 	that.move = function(direction){
 		//if the input direction is exactly opposite of the direction the snake is currently moving,
 		//do nothing and return false as it is an invalid move 
+		console.log("suspicious", direction)
+		console.log((heading + 2) % 4 )
 		if ((heading + 2) % 4 == direction){
 			return false
 		}
+		console.log("heading",heading)
 		//otherwise, move the snake in the proper direction, tell the game you've moved
 		// console.log('direction = ')
 		console.log("direction: ",direction)
