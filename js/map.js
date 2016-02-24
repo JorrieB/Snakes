@@ -66,6 +66,7 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
         goalPosition = SnakeMap[index].goalPos
         cells[goalPosition[0]][goalPosition[1]].setExit(true)
         cells[goalPosition[0]][goalPosition[1]].setOccupied(false)
+        cells[goalPosition[0]][goalPosition[1]].setColor(SnakeMap[index].snakeColor)
 
     }
 
@@ -128,4 +129,4 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
     }
 
         return that
-    }
+};
