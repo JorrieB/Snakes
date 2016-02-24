@@ -13,21 +13,10 @@ var activeSnake
 var pastSnakes = [] 
 var keyboardLock = false;
 
-var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
-                 {snakeLength:4, startPos:[5, 0], goalPos:[2, 0], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'},
+var snakeData = [{snakeLength:3, startPos:[0, 4], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
+                 {snakeLength:4, startPos:[6, 4], goalPos:[0, 2], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'}];
 
-                 {snakeLength:5, startPos:[4, 0], goalPos:[2, 6], heading:DIRECTION_ENUM.DOWN, snakeColor:'#cc33ff'}];
-
-// Create Empty wallmap
-wallData = []
-for (var x = 0; x < ROWS; x++) {
-    var newRow = []
-    for (var y = 0; y < COLS; y++) {
-        newRow.push(0)
-    }
-    wallData.push(newRow)
-}
-
+var wallData = [[0, 0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0, 0]]
 var map = Map(ROWS, COLS, snakeData, wallData);
 
 var Game = {
