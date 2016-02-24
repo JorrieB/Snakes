@@ -6,6 +6,7 @@ var Map = function(sizeX, sizeY, SnakeMap) {
     var exit
 
     var collisionColor = '#FF0000'
+    var wallColor = '#B3B3B3'
 
     var enumCell= {
         empty:0,
@@ -30,10 +31,10 @@ var Map = function(sizeX, sizeY, SnakeMap) {
         // console.log("cells1: ",cells);
         // Initialize the walls
         for (var x = 0; x < rows; x++) {
-            cells[0][x].setColorAndOccupy('#B3B3B3')
-            cells[x][0].setColorAndOccupy('#B3B3B3')
-            cells[rows - 1][x].setColorAndOccupy('#B3B3B3')
-            cells[x][columns - 1].setColorAndOccupy('#B3B3B3')
+            cells[0][x].setColorAndOccupy(wallColor)
+            cells[x][0].setColorAndOccupy(wallColor)
+            cells[rows - 1][x].setColorAndOccupy(wallColor)
+            cells[x][columns - 1].setColorAndOccupy(wallColor)
         }  
 
         // Empty all of the entry/exit cells
@@ -82,7 +83,6 @@ var Map = function(sizeX, sizeY, SnakeMap) {
         // console.log(x,", ", y);
         console.log("x",x)
         console.log("y",y)
-        console.log("put")
         if (0 <= y && 0 <= x && y < rows && x < columns) {
             if (!cells[x][y].isOccupied()){
                 cells[x][y].setColorAndOccupy(color)
@@ -90,13 +90,7 @@ var Map = function(sizeX, sizeY, SnakeMap) {
             }
             cells[x][y].setColorAndOccupy(collisionColor)
             return false
-
-            // if (cells[x][y] == enumCell.exit || cells[x][y] == enumCell.empty) {
-            //     cells[x][y] = content
-            //     return true
-            // }
         }
-        // result = false
     }
 
     that.getRows = function() {
