@@ -13,7 +13,6 @@ var activeSnake
 var pastSnakes = [] 
 var keyboardLock = false;
 
-// var game = new Phaser.Game(COLS * FONT, ROWS * FONT, Phaser.CANVAS, null, {
 var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, null, {
         create: create,
         render: drawUpdatedBoard
@@ -141,36 +140,6 @@ function updateSnakes(snakeArray){
                 }
         }
         return collisionCoordinate
-}
-
-// function drawInitBoard() {
-//     // var graphics = game.add.graphics(map.getRows(), map.getColumns());
-//     // console.log(map.getRows());
-//     // game.stage.backgroundColor = '#061f27';
-//     for (var x = 0; x < map.getRows(); x++) {
-//         for (var y = 0; y < map.getColumns(); y++) {
-//             // var newSquare = new Phaser.Rectangle(x * 100, y * 100, 100, 100);
-//             // game.debug.renderRectangle(newSquare,'#FFF');
-
-//             // graphics.beginFill("#0FFFFF", 1);
-//             // graphics.drawRect(x * 100, y * 100, 100, 100);
-//             // graphics.endFill;
-
-//         }
-//     }
-// }
-
-function drawUpdatedBoard() {
-    game.stage.backgroundColor = '#061f27';
-    for (var x = 0; x < map.getRows(); x++) {
-        for (var y = 0; y < map.getColumns(); y++) {
-
-            var newSquare = new Phaser.Rectangle(x * cellWidth + 2, y * cellHeight + 2, 96, 96);
-            game.debug.renderRectangle(newSquare,map.getColor(x,y));
-
-        }
-    }
-
 }
 
 //returns true iff there are still snakes on the board (active or past)
