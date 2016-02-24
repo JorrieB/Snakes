@@ -63,7 +63,7 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
             cells[startPosition[0]][startPosition[1]].setColor('#FFF')
             cells[startPosition[0]][startPosition[1]].setOccupied(false)
             goalPosition = SnakeMap[i].goalPos
-            cells[goalPosition[0]][goalPosition[1]].setColor(SnakeMap[i].snakeColor)
+            cells[goalPosition[0]][goalPosition[1]].setColor(shadeColor(SnakeMap[i].snakeColor,.7))
             cells[goalPosition[0]][goalPosition[1]].setOccupied(false)
         }
 
