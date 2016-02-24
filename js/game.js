@@ -208,13 +208,6 @@ function exitBoard() {
     }, 250);
 }
 
-
-// stub
-function preload() {
-    game.load.image('snake', './images/snake.png');
-    game.load.image('shadow', './images/apple.png');
-}
-
 // Update the internal database in the board, and update the canvas
 function update() {
     updateBoard()
