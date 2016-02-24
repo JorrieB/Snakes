@@ -37,19 +37,10 @@ var game = new Phaser.Game(COLS * cellHeight, ROWS * cellWidth, Phaser.CANVAS, n
 var snakeData = [{snakeLength:3, startPos:[0, 3], goalPos:[6, 4], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
                  {snakeLength:4, startPos:[6, 3], goalPos:[0, 4], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'}];
 
-var wallData = [[0, 0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0, 0]]
-// Original Level
-// Create Empty wallmap
-wallData = []
-for (var x = 0; x < ROWS; x++) {
-    var newRow = []
-    for (var y = 0; y < COLS; y++) {
-        newRow.push(0)
-    }
-    wallData.push(newRow)
-}
-
-
+console.log("Hi")
+// var wallData = [[0, 0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0, 0]]
+var wallData = 1
+console.log(wallData)
 
 var map = Map(ROWS, COLS, snakeData, wallData);
 
