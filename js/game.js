@@ -106,8 +106,8 @@ function updateBoard() {
         
         SnakeHeadPosition = activeSnake.getPositionAtTime(timeStep)[0];
         var toCallExit = map.isExit(SnakeHeadPosition[0], SnakeHeadPosition[1])
-        var collCoord1 = updateSnakes(4,[activeSnake])
-        var collCoord2 = updateSnakes(3,pastSnakes)
+        var collCoord1 = updateSnakes([activeSnake])
+        var collCoord2 = updateSnakes(pastSnakes)
 
         if (!(collCoord1 == null && collCoord2 == null)) {
                 //game over
@@ -127,18 +127,22 @@ function updateBoard() {
 //takes array of snakes, updates map according to their positions
 //returns null if no collision occurred, else returns coordinate of collision
 
-function updateSnakes(cellVal,snakeArray){
+function updateSnakes(snakeArray){
+        console.log("upate snakes being called")
         collisionCoordinate = null
         for (s in snakeArray) {
+                console.log('1')
                 var snake = snakeArray[s];
                 var positions = snake.getPositionAtTime(timeStep)
-                console.log(positions)
+                // console.log(positions)
                 for (i in positions) {
+                        console.log('2')
                         var currentSnakePosition = positions[i];
-                        console.log(currentSnakePosition)
                         // console.log(currentSnakePosition)
-                        var collision = !(map.put(cellVal,currentSnakePosition[0],currentSnakePosition[1])) //input at position the value for current snake
+                        console.log(snake.getColor())
+                        var collision = !(map.put(snake.getColor(),currentSnakePosition[0],currentSnakePosition[1])) //input at position the value for current snake
                         if (collision) {
+                                console.log('3')
                                 collisionCoordinate = (currentSnakePosition[0],currentSnakePosition[1])
                         }
                 }
@@ -171,45 +175,10 @@ function drawUpdatedBoard() {
             // enumCells
             // var square = game.add.sprite(x*100, y*100, 'shadow');
 
-            var newSquare = new Phaser.Rectangle(x * 100 + 2, y * 100 + 2, 96, 96);
-            // game.debug.renderRectangle(newSquare,'#FFF');
+            var newSquare = new Phaser.Rectangle(x * cellWidth + 2, y * cellHeight + 2, 96, 96);
+            game.debug.renderRectangle(newSquare,map.getColor(x,y));
 
-            // if empty cell:
-            if (map.get(x,y) == 0) {
-                // square.tint = '#FFF';
-                // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                game.debug.renderRectangle(newSquare,'#FFF')
-            }
 
-            // if border cell:
-            if (map.get(x,y) == 1) {
-                // square.tint = '#B3B3B3s';
-                // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                game.debug.renderRectangle(newSquare,'#B3B3B3')
-            }
-
-            // if exit cell:
-            if (map.get(x,y) == 2) {
-                // square.tint = '#305AFF';
-                // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                game.debug.renderRectangle(newSquare,'#305AFF')
-            }
-
-            // if pastSnakes cell:
-            if (map.get(x,y) == 3) {
-                // game.add.sprite(x*100, y*100, 'shadow');
-                // square.tint = '#DB95B8';
-                // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                game.debug.renderRectangle(newSquare,'#6d6d6d')
-            }
-
-            // if currentSnakes cell:
-            if (map.get(x,y) == 4) {
-                // game.add.sprite(x*100, y*100, 'snake');
-                // Phaser.Rectangle(x*100, y*100, map.rows, map.columns);
-                // console.log(activeSnake.getColor());
-                game.debug.renderRectangle(newSquare, activeSnake.getColor());
-            }
             
         }
     }
@@ -245,8 +214,8 @@ function exitBoard() {
 
             // Updating the position of the board
             map.clear(pastSnakes.length)
-            updateSnakes(4,[activeSnake])
-            updateSnakes(3,pastSnakes)
+            updateSnakes([activeSnake])
+            updateSnakes(pastSnakes)
             drawUpdatedBoard();
             exitBoard()
         }else{
