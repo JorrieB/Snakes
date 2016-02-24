@@ -75,6 +75,11 @@ var Snake = function(startLength,start,goal,initHeading, snakeColor){
 		return (story.length + snakeLength) > timeStep + 1 
 	}
 
+	//returns head position to make sure it can't navigate off the board
+	that.getHead = function(){
+		return story[story.length - 1]
+	}
+
 	return that
 
 }

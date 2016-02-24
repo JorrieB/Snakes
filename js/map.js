@@ -18,6 +18,7 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
 
     // Initialize a new empty map
 	that.clear = function(index) {
+        console.log("clearing")
         console.log(wallMap)
         that.clearCells()
         that.initWalls()
@@ -39,13 +40,11 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
     }
 
     that.initWalls = function(){
-        console.log("Initializing walls")
         // Insert the wall
         for (var x = 0; x < rows; x++) {
             for (var y = 0; y < columns; y++) {
-                console.log(wallMap)
                 if (wallMap[x][y] == 1){
-                    cells[x][y].setColorAndOccupy('#B3B3B3')
+                    cells[x][y].setColorAndOccupy(wallColor)
                 }
             }
         }
@@ -57,18 +56,20 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
     that.initPortals = function(index){
         for (var i = 0; i < SnakeMap.length; i++){
             startPosition = SnakeMap[i].startPos
+            //color start cell with snake color
+            // cells[startPosition[0]][startPosition[1]].setColor(SnakeMap[i].snakeColor)
+            //color start cell white
             cells[startPosition[0]][startPosition[1]].setColor('#FFF')
             cells[startPosition[0]][startPosition[1]].setOccupied(false)
             goalPosition = SnakeMap[i].goalPos
-            cells[goalPosition[0]][goalPosition[1]].setColor('#FFF')
+            cells[goalPosition[0]][goalPosition[1]].setColor(SnakeMap[i].snakeColor)
             cells[goalPosition[0]][goalPosition[1]].setOccupied(false)
         }
 
-        // Initialize exit
+        // Initialize current snake's exit
+        console.log(index)
         goalPosition = SnakeMap[index].goalPos
         cells[goalPosition[0]][goalPosition[1]].setExit(true)
-        cells[goalPosition[0]][goalPosition[1]].setOccupied(false)
-        cells[goalPosition[0]][goalPosition[1]].setColor(SnakeMap[index].snakeColor)
 
     }
 
@@ -97,10 +98,6 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
     //returns whether or not a collision occurred
     //
     that.put = function(color, x, y){
-        // console.log("cellsput: ",cells);
-        // console.log(x,", ", y);
-        console.log("x",x)
-        console.log("y",y)
         if (0 <= y && 0 <= x && y < rows && x < columns) {
             if (!cells[x][y].isOccupied()){
                 cells[x][y].setColorAndOccupy(color)
