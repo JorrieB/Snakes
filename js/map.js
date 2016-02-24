@@ -38,6 +38,7 @@ var Map = function(sizeX, sizeY, SnakeMap, wallMap) {
     }
 
     that.initWalls = function(){
+        console.log("Initializing walls")
         // Insert the wall
         for (var x = 0; x < rows; x++) {
             for (var y = 0; y < columns; y++) {
