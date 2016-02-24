@@ -1,34 +1,52 @@
 <html>
 
 <head>
- <!-- <head>  -->
    <meta charset="UTF-8" />
    <title>Phaser - Making your first game, part 1</title>
    <script type="text/javascript" src="js/phaser.min.js"></script>
+   <script type="text/javascript" src="js/start.js"></script>
    <script type="text/javascript" src="js/map.js" ></script>
    <script type="text/javascript" src="js/snake.js" ></script>
-   <script type="text/javascript" src="js/draw.js" ></script>
-   <script type="text/javascript" src="js/game.js" ></script>
+   <script type="text/javascript" src="js/draw.js" ></script> 
+   <script type="text/javascript" src="js/game2.js" ></script>
+   <script type="text/javascript" src="js/main.js" ></script>
 
     <style type="text/css">
         body {
             margin: 0;
         }
     </style>
-
-<!-- </head> -->
 </head>
 
 <body>
-  <p>
-    <center> <font size="6"> Use arrow keys to move your snake. </font> </center>
-    <center> <font size="6"> Get your snake to the blue square. </font> </center>
-    <center> <font size="6"> Press 1 to go back to the previous snake. </font> </center>
-  </p>>
-  <p>
-    <center > <font size="10" id = "snakeIndex"> Snake  </font> </center>
-    <center > <font size="10" id = "timeStep"> Time = 0 </font> </center>
-    <center > <font size="10" id = "eventText"> ... </font> </center>
-  </p>
+  <!-- <div style = "height: 40%; width: 100%">
+    <div style = "float:left; width:33%; padding:30px; overflow: scroll">
+        <ol>
+          <font size="6">
+            <li> Jerm (Time = 8) </li>
+            <li> Nayeon (Time = 8) </li>
+            <li> Koute (Time = 8) </li>
+            <li> Tomas (Time = 10) </li>
+            <li> Jose Z. (Time = 10) </li>
+            
+            <li> Lisa (Time = 16) </li>
+          </font>
+        </ol>  
+
+    </div>
+    <div style = "float:left; width:33%; padding:30px">
+
+      <center> <font size="6"> Use arrow keys to move your snake. </font> </center>
+      <center> <font size="6"> Get your snake to the blue square. </font> </center>
+      <center> <font size="6"> Press 1 to go back to the previous snake. </font> </center>
+    
+      <center > <font size="10" id = "snakeIndex"> Snake  </font> </center>
+      <center > <font size="10" id = "timeStep"> Time = 0 </font> </center>
+      <center > <font size="10" id = "eventText"> ... </font> </center>
+    
+    </div> -->
+    <div id='gameDiv'>
+    </div>
+  <!-- </div> -->
 </body>
 </html>

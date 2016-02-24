@@ -95,4 +95,4 @@ var Map = function(sizeX, sizeY, SnakeMap) {
     }
 
         return that
-};
+    }
