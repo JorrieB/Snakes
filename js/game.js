@@ -13,6 +13,7 @@ var activeSnake
 var pastSnakes = [] 
 var keyboardLock = false;
 
+
 var levelIndex = 0;
 var levels = []
 
@@ -44,8 +45,6 @@ firstLevel = {snakes:snakeData, wall:wallData}
 levels.push(firstLevel)
 
 // Second level
-
-
 var snakeData = [{snakeLength:3, startPos:[0, 4], goalPos:[6, 2], heading:DIRECTION_ENUM.RIGHT, snakeColor:'#E5FF00'},
                   {snakeLength:4, startPos:[6, 4], goalPos:[0, 2], heading:DIRECTION_ENUM.LEFT, snakeColor:'#2BFF95'}];
 
@@ -55,8 +54,6 @@ secondLevel = {snakes:snakeData, wall:wallData}
 levels.push(secondLevel)
 
 // Third level
-
-
 
 var map;
 
@@ -81,7 +78,6 @@ var Game = {
     render : function() {
         drawUpdatedBoard()
     }
-
 };
 
 function onKeyUp(event) {
