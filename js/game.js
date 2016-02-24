@@ -132,9 +132,13 @@ function onKeyUp(event) {
                         if (activeSnake.getHead()[1] + 1 >= ROWS){return}
                         acted = activeSnake.move(DIRECTION_ENUM.DOWN)
                         break
-                 case Phaser.Keyboard.ONE:
+                case Phaser.Keyboard.ONE:
                              console.log("Time going to rollback")
                              rewind();
+                case Phaser.Keyboard.TWO:
+                // TODO: reset without going to start screen
+                             console.log("Reset game")
+                             reset();
         }
 
         // Check if the change of direction was allowed
@@ -212,7 +216,7 @@ function updateBoard() {
                 //game over
                 signalEvent("You bumped into something else!")
                 lockKeyboard()
-                setTimeout(collision, 2050)
+                setTimeout(collision, 1000)
         }
         if (toCallExit) {
             lockKeyboard()
@@ -284,6 +288,11 @@ function rewind(){
     var snakeProperties = map.getSnakeAtIndex(pastSnakes.length)
     activeSnake = createSnakeWith(snakeProperties)
     update()
+}
+
+// Reset level to 1
+function reset(){
+    //TODO
 }
 
 function lockKeyboard(){
